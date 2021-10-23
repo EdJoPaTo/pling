@@ -13,9 +13,12 @@ rust-version = "1.56.0"
 [features]
 default = [
     "serde-derive",
+    "email",
     "http-sync",
 ]
 serde-derive = ["serde", "url/serde"]
+
+email = ["lettre"]
 
 # Feature contains all HTTP APIs in an either sync or async manner.
 http-async = ["url", "reqwest"]
@@ -31,6 +34,12 @@ required-features = ["http-sync"]
 
 [dependencies]
 anyhow = "1"
+
+[dependencies.lettre]
+version = "0.10.0-rc.3"
+optional = true
+default-features = false
+features = ["smtp-transport", "hostname", "builder", "rustls-tls"]
 
 [dependencies.reqwest]
 version = "0.11"

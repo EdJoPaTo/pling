@@ -6,6 +6,11 @@ mod serde_helper;
 mod command;
 pub use command::Command;
 
+#[cfg(feature = "email")]
+mod email;
+#[cfg(feature = "email")]
+pub use email::Email;
+
 #[cfg(any(feature = "http-sync", feature = "http-async"))]
 mod slack;
 #[cfg(any(feature = "http-sync", feature = "http-async"))]
@@ -63,6 +68,9 @@ pub(crate) const USER_AGENT: &str = concat!(
 pub enum Notification {
     Command(Command),
 
+    #[cfg(feature = "email")]
+    Email(Email),
+
     #[cfg(any(feature = "http-sync", feature = "http-async"))]
     Slack(Slack),
 
@@ -79,6 +87,9 @@ impl Notification {
         let mut result = Vec::new();
 
         if let Some(n) = Command::from_env() {
+            result.push(n.into());
+        }
+        if let Some(n) = Email::from_env() {
             result.push(n.into());
         }
         if let Some(n) = Slack::from_env() {
@@ -107,6 +118,9 @@ impl Notification {
     pub fn send_sync(&self, text: &str) -> anyhow::Result<()> {
         match self {
             Self::Command(cmd) => cmd.send_sync(text)?,
+
+            #[cfg(feature = "email")]
+            Self::Email(o) => o.send_sync(text)?,
 
             #[cfg(feature = "http-sync")]
             Self::Slack(o) => o.send_sync(text)?,
@@ -139,6 +153,9 @@ impl Notification {
     pub async fn send_async(&self, text: &str) -> anyhow::Result<()> {
         match self {
             Self::Command(cmd) => cmd.send_sync(text)?,
+
+            #[cfg(feature = "email")]
+            Self::Email(o) => o.send_sync(text)?,
 
             #[cfg(feature = "http-sync")]
             Self::Slack(o) => o.send_async(text).await?,

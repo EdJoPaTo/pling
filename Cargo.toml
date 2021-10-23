@@ -1,0 +1,62 @@
+[package]
+name = "pling"
+description = "Send notifications via Slack, Telegram, E-Mail, ..."
+version = "0.1.0"
+license = "MIT"
+repository = "https://github.com/EdJoPaTo/pling"
+authors = ["EdJoPaTo <pling-rust@edjopato.de>"]
+edition = "2018"
+rust-version = "1.48.0" # Debian 11
+
+# See more keys and their definitions at https://doc.rust-lang.org/cargo/reference/manifest.html
+
+[features]
+default = [
+    "serde-derive",
+    "http-sync",
+]
+serde-derive = ["serde", "url/serde"]
+
+# Feature contains all HTTP APIs in an either sync or async manner.
+http-async = ["url", "reqwest"]
+http-sync = ["url", "ureq"]
+
+[[example]]
+name = "slack"
+required-features = ["http-sync"]
+
+[[example]]
+name = "telegram"
+required-features = ["http-sync"]
+
+[dependencies]
+anyhow = "1"
+
+[dependencies.reqwest]
+version = "0.11"
+optional = true
+default-features = false
+features = [
+    "rustls-tls",
+    "socks", # Socks5 Proxy support
+    "brotli", # response body decompression
+    "deflate", # response body decompression
+    "gzip", # response body decompression
+]
+
+[dependencies.serde]
+version = "1"
+optional = true
+features = ["derive"]
+
+[dependencies.ureq]
+version = "2"
+optional = true
+
+[dependencies.url]
+version = "2"
+optional = true
+
+[dev-dependencies]
+serde_json = "1"
+serde_yaml = "0.8"

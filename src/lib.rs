@@ -12,6 +12,11 @@ mod email;
 pub use email::Email;
 
 #[cfg(any(feature = "http-sync", feature = "http-async"))]
+mod matrix;
+#[cfg(any(feature = "http-sync", feature = "http-async"))]
+pub use matrix::Matrix;
+
+#[cfg(any(feature = "http-sync", feature = "http-async"))]
 mod slack;
 #[cfg(any(feature = "http-sync", feature = "http-async"))]
 pub use slack::Slack;
@@ -72,6 +77,9 @@ pub enum Notification {
     Email(Email),
 
     #[cfg(any(feature = "http-sync", feature = "http-async"))]
+    Matrix(Matrix),
+
+    #[cfg(any(feature = "http-sync", feature = "http-async"))]
     Slack(Slack),
 
     #[cfg(any(feature = "http-sync", feature = "http-async"))]
@@ -90,6 +98,9 @@ impl Notification {
             result.push(n.into());
         }
         if let Some(n) = Email::from_env() {
+            result.push(n.into());
+        }
+        if let Some(n) = Matrix::from_env() {
             result.push(n.into());
         }
         if let Some(n) = Slack::from_env() {
@@ -121,6 +132,11 @@ impl Notification {
 
             #[cfg(feature = "email")]
             Self::Email(o) => o.send_sync(text)?,
+
+            #[cfg(feature = "http-sync")]
+            Self::Matrix(o) => o.send_sync(text)?,
+            #[cfg(all(feature = "http-async", not(feature = "http-sync")))]
+            Self::Matrix(_) => unimplemented!("http-sync feature is disabled"),
 
             #[cfg(feature = "http-sync")]
             Self::Slack(o) => o.send_sync(text)?,
@@ -156,6 +172,11 @@ impl Notification {
 
             #[cfg(feature = "email")]
             Self::Email(o) => o.send_sync(text)?,
+
+            #[cfg(feature = "http-sync")]
+            Self::Matrix(o) => o.send_async(text).await?,
+            #[cfg(all(feature = "http-async", not(feature = "http-sync")))]
+            Self::Matrix(_) => unimplemented!("http-async feature is disabled"),
 
             #[cfg(feature = "http-sync")]
             Self::Slack(o) => o.send_async(text).await?,

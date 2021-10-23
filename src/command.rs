@@ -45,7 +45,7 @@ impl Command {
     ///
     /// # Errors
     ///
-    /// When the command isnt found or when the `ExitCode` isn't successful.
+    /// When the command isn't found or when the `ExitCode` isn't successful.
     pub fn send_sync(&self, text: &str) -> Result<(), std::io::Error> {
         let output = std::process::Command::new(&self.program)
             .args(&self.arguments)

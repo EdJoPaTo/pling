@@ -47,7 +47,7 @@ pub(crate) const USER_AGENT: &str = concat!(
 /// }
 /// ```
 ///
-/// With the `serde-derive` feature you can also load a config via Serde like yaml, toml or json.
+/// With the `serde-derive` feature you can also load a config via Serde like YAML, TOML or JSON.
 /// ```
 /// let yaml = r#"---
 /// - Telegram:
@@ -103,7 +103,7 @@ impl Notification {
     /// # Panics
     ///
     /// When this crate is built with only some features not everything is implemented.
-    /// For example it wont work to `Telegram::send_sync` when the feature `http-sync` isnt enabled.
+    /// For example it won't work to `Telegram::send_sync` when the feature `http-sync` isn't enabled.
     pub fn send_sync(&self, text: &str) -> anyhow::Result<()> {
         match self {
             Self::Command(cmd) => cmd.send_sync(text)?,
@@ -135,7 +135,7 @@ impl Notification {
     /// # Panics
     ///
     /// When this crate is built with only some features not everything is implemented.
-    /// For example it wont work to `Telegram::send_async` when the feature `http-async` isnt enabled.
+    /// For example it won't work to `Telegram::send_async` when the feature `http-async` isn't enabled.
     pub async fn send_async(&self, text: &str) -> anyhow::Result<()> {
         match self {
             Self::Command(cmd) => cmd.send_sync(text)?,

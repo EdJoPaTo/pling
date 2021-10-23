@@ -7,17 +7,17 @@ mod command;
 pub use command::Command;
 
 #[cfg(any(feature = "http-sync", feature = "http-async"))]
-pub mod slack;
+mod slack;
 #[cfg(any(feature = "http-sync", feature = "http-async"))]
 pub use slack::Slack;
 
 #[cfg(any(feature = "http-sync", feature = "http-async"))]
-pub mod telegram;
+mod telegram;
 #[cfg(any(feature = "http-sync", feature = "http-async"))]
-pub use telegram::Telegram;
+pub use telegram::{ParseMode as TelegramParseMode, TargetChat as TelegramTargetChat, Telegram};
 
 #[cfg(any(feature = "http-sync", feature = "http-async"))]
-pub mod webhook;
+mod webhook;
 #[cfg(any(feature = "http-sync", feature = "http-async"))]
 pub use webhook::Webhook;
 
@@ -75,7 +75,7 @@ pub enum Notification {
 
 impl Notification {
     #[must_use]
-    pub fn from_env() -> Vec<Notification> {
+    pub fn from_env() -> Vec<Self> {
         let mut result = Vec::new();
 
         if let Some(n) = Command::from_env() {

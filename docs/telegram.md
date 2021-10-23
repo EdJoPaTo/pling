@@ -1,5 +1,7 @@
+Send a Telegram message
+
 Documentation
-- https://core.telegram.org/bots/api#sendmessage
+- <https://core.telegram.org/bots/api#sendmessage>
 
 Needs to be compiled with feature `http-sync` or `http-async`
 

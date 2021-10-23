@@ -1,5 +1,7 @@
+Send a Slack message
+
 Documentation
-- https://api.slack.com/messaging/webhooks#getting_started
+- <https://api.slack.com/messaging/webhooks#getting_started>
 
 Needs to be compiled with feature `http-sync` or `http-async`
 

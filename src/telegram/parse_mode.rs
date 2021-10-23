@@ -3,6 +3,8 @@ use std::str::FromStr;
 
 #[derive(Debug, Clone, Copy, PartialEq, Eq)]
 #[cfg_attr(feature = "serde", derive(serde::Serialize, serde::Deserialize))]
+/// `parse_mode` on how the Telegram message should be rendered.
+/// See <https://core.telegram.org/bots/api#formatting-options>
 pub enum ParseMode {
     Html,
     Markdown,
@@ -23,7 +25,7 @@ impl FromStr for ParseMode {
 
 impl ParseMode {
     #[must_use]
-    pub fn to_str(&self) -> &'static str {
+    pub const fn to_str(&self) -> &'static str {
         match self {
             ParseMode::Html => "HTML",
             ParseMode::Markdown => "Markdown",

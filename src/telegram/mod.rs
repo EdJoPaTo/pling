@@ -32,7 +32,7 @@ impl From<Telegram> for crate::Notification {
 
 impl Telegram {
     #[must_use]
-    pub fn new(bot_token: String, target_chat: TargetChat) -> Self {
+    pub const fn new(bot_token: String, target_chat: TargetChat) -> Self {
         Self {
             bot_token,
             target_chat,
@@ -150,7 +150,7 @@ impl Telegram {
 }
 
 #[must_use]
-fn str_bool(value: bool) -> &'static str {
+const fn str_bool(value: bool) -> &'static str {
     if value {
         "true"
     } else {

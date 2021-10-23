@@ -6,7 +6,7 @@ license = "MIT"
 repository = "https://github.com/EdJoPaTo/pling"
 authors = ["EdJoPaTo <pling-rust@edjopato.de>"]
 edition = "2018"
-rust-version = "1.48.0" # Debian 11
+rust-version = "1.56.0"
 
 # See more keys and their definitions at https://doc.rust-lang.org/cargo/reference/manifest.html
 

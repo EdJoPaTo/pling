@@ -109,17 +109,17 @@ impl Notification {
             Self::Command(cmd) => cmd.send_sync(text)?,
 
             #[cfg(feature = "http-sync")]
-            Self::Slack(slack) => slack.send_sync(text)?,
+            Self::Slack(o) => o.send_sync(text)?,
             #[cfg(all(feature = "http-async", not(feature = "http-sync")))]
             Self::Slack(_) => unimplemented!("http-sync feature is disabled"),
 
             #[cfg(feature = "http-sync")]
-            Self::Telegram(tg) => tg.send_sync(text, None, false, false)?,
+            Self::Telegram(o) => o.send_sync(text, None, false, false)?,
             #[cfg(all(feature = "http-async", not(feature = "http-sync")))]
             Self::Telegram(_) => unimplemented!("http-sync feature is disabled"),
 
             #[cfg(feature = "http-sync")]
-            Self::Webhook(hook) => hook.send_sync(text)?,
+            Self::Webhook(o) => o.send_sync(text)?,
             #[cfg(all(feature = "http-async", not(feature = "http-sync")))]
             Self::Webhook(_) => unimplemented!("http-sync feature is disabled"),
         }
@@ -141,17 +141,17 @@ impl Notification {
             Self::Command(cmd) => cmd.send_sync(text)?,
 
             #[cfg(feature = "http-sync")]
-            Self::Slack(slack) => slack.send_async(text).await?,
+            Self::Slack(o) => o.send_async(text).await?,
             #[cfg(all(feature = "http-async", not(feature = "http-sync")))]
             Self::Slack(_) => unimplemented!("http-async feature is disabled"),
 
             #[cfg(feature = "http-async")]
-            Self::Telegram(tg) => tg.send_async(text, None, false, false).await?,
+            Self::Telegram(o) => o.send_async(text, None, false, false).await?,
             #[cfg(all(feature = "http-sync", not(feature = "http-async")))]
             Self::Telegram(_) => unimplemented!("http-async feature is disabled"),
 
             #[cfg(feature = "http-sync")]
-            Self::Webhook(hook) => hook.send_async(text).await?,
+            Self::Webhook(o) => o.send_async(text).await?,
             #[cfg(all(feature = "http-async", not(feature = "http-sync")))]
             Self::Webhook(_) => unimplemented!("http-async feature is disabled"),
         }

@@ -72,6 +72,7 @@ impl Telegram {
         format!("https://api.telegram.org/bot{}/sendMessage", self.bot_token)
     }
 
+    #[must_use]
     fn base_form(
         &self,
         parse_mode: Option<ParseMode>,

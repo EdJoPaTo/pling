@@ -31,7 +31,7 @@ jobs:
           # Check future versions and maybe get some glances on soon to be lints
           - os: ubuntu-latest
             toolchain: beta
-            clippyargs: -W clippy::pedantic
+            clippyargs: -W clippy::pedantic -W clippy::nursery -W clippy::cargo
             features: --all-features
           - os: ubuntu-latest
             toolchain: nightly
@@ -62,11 +62,17 @@ jobs:
 
       - uses: actions/checkout@v2
 
-      - name: Run clippy
+      - name: Check clippy
         uses: actions-rs/cargo@v1
         with:
           command: clippy
           args: --verbose --all-targets ${{ matrix.features }} -- ${{ matrix.clippyargs }}
+
+      - name: Check docs
+        uses: actions-rs/cargo@v1
+        with:
+          command: doc
+          args: --verbose --no-deps ${{ matrix.features }}
 
       - name: Run tests
         uses: actions-rs/cargo@v1

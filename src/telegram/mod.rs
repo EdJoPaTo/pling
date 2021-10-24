@@ -159,6 +159,7 @@ const fn str_bool(value: bool) -> &'static str {
 }
 
 #[test]
+#[cfg(feature = "serde")]
 fn can_serde_parse_telegram() {
     let telegram = Telegram {
         bot_token: "123:ABC".into(),

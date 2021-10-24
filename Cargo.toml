@@ -7,13 +7,18 @@ repository = "https://github.com/EdJoPaTo/pling"
 authors = ["EdJoPaTo <pling-rust@edjopato.de>"]
 edition = "2018"
 rust-version = "1.56.0"
+categories = [
+    "command-line-interface",
+    "email",
+    "network-programming",
+    "web-programming::http-client",
+]
+keywords = ["notification", "telegram", "slack"]
 
 # See more keys and their definitions at https://doc.rust-lang.org/cargo/reference/manifest.html
 
 [features]
 default = [
-    "serde-derive",
-    "email",
     "http-sync",
 ]
 serde-derive = ["serde", "url/serde"]

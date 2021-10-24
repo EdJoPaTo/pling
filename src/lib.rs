@@ -1,5 +1,36 @@
 #![forbid(unsafe_code)]
 
+/*!
+Send notifications via Slack, Telegram, E-Mail, ...
+
+The name of this Rust crate is inspired by the notification arrival sound.
+
+# Usage
+
+Add something like this to your `Cargo.toml` based on what you (or your users) need:
+```toml
+[dependencies.pling]
+version = "…"
+features = ["email"]
+```
+
+```rust
+let notifications = pling::Notification::from_env();
+dbg!(&notifications);
+for notifier in notifications {
+  notifier.send_sync("Hello world!");
+}
+```
+
+## Available Cargo features
+
+- `serde-derive` provides [serde](https://crates.io/crates/serde) Serialization / Deserialization implementations for structs.
+- `email` provides Email sending via [lettre](https://crates.io/crates/lettre)
+- `http-sync` provides HTTP APIs via [ureq](https://crates.io/crates/ureq) (Enabled by default)
+- `http-async` provides HTTP APIs via [reqwest](https://crates.io/crates/reqwest)
+
+!*/
+
 #[cfg(feature = "serde")]
 mod serde_helper;
 
@@ -97,18 +128,23 @@ impl Notification {
         if let Some(n) = Command::from_env() {
             result.push(n.into());
         }
+        #[cfg(feature = "email")]
         if let Some(n) = Email::from_env() {
             result.push(n.into());
         }
+        #[cfg(any(feature = "http-sync", feature = "http-async"))]
         if let Some(n) = Matrix::from_env() {
             result.push(n.into());
         }
+        #[cfg(any(feature = "http-sync", feature = "http-async"))]
         if let Some(n) = Slack::from_env() {
             result.push(n.into());
         }
+        #[cfg(any(feature = "http-sync", feature = "http-async"))]
         if let Some(n) = Telegram::from_env() {
             result.push(n.into());
         }
+        #[cfg(any(feature = "http-sync", feature = "http-async"))]
         if let Some(n) = Webhook::from_env() {
             result.push(n.into());
         }
@@ -135,23 +171,17 @@ impl Notification {
 
             #[cfg(feature = "http-sync")]
             Self::Matrix(o) => o.send_sync(text)?,
-            #[cfg(all(feature = "http-async", not(feature = "http-sync")))]
-            Self::Matrix(_) => unimplemented!("http-sync feature is disabled"),
-
             #[cfg(feature = "http-sync")]
             Self::Slack(o) => o.send_sync(text)?,
-            #[cfg(all(feature = "http-async", not(feature = "http-sync")))]
-            Self::Slack(_) => unimplemented!("http-sync feature is disabled"),
-
             #[cfg(feature = "http-sync")]
             Self::Telegram(o) => o.send_sync(text, None, false, false)?,
-            #[cfg(all(feature = "http-async", not(feature = "http-sync")))]
-            Self::Telegram(_) => unimplemented!("http-sync feature is disabled"),
-
             #[cfg(feature = "http-sync")]
             Self::Webhook(o) => o.send_sync(text)?,
+
             #[cfg(all(feature = "http-async", not(feature = "http-sync")))]
-            Self::Webhook(_) => unimplemented!("http-sync feature is disabled"),
+            Self::Matrix(_) | Self::Slack(_) | Self::Telegram(_) | Self::Webhook(_) => {
+                unimplemented!("http-sync feature is disabled")
+            }
         }
         Ok(())
     }
@@ -173,25 +203,19 @@ impl Notification {
             #[cfg(feature = "email")]
             Self::Email(o) => o.send_sync(text)?,
 
-            #[cfg(feature = "http-sync")]
+            #[cfg(feature = "http-async")]
             Self::Matrix(o) => o.send_async(text).await?,
-            #[cfg(all(feature = "http-async", not(feature = "http-sync")))]
-            Self::Matrix(_) => unimplemented!("http-async feature is disabled"),
-
-            #[cfg(feature = "http-sync")]
+            #[cfg(feature = "http-async")]
             Self::Slack(o) => o.send_async(text).await?,
-            #[cfg(all(feature = "http-async", not(feature = "http-sync")))]
-            Self::Slack(_) => unimplemented!("http-async feature is disabled"),
-
             #[cfg(feature = "http-async")]
             Self::Telegram(o) => o.send_async(text, None, false, false).await?,
-            #[cfg(all(feature = "http-sync", not(feature = "http-async")))]
-            Self::Telegram(_) => unimplemented!("http-async feature is disabled"),
-
-            #[cfg(feature = "http-sync")]
+            #[cfg(feature = "http-async")]
             Self::Webhook(o) => o.send_async(text).await?,
-            #[cfg(all(feature = "http-async", not(feature = "http-sync")))]
-            Self::Webhook(_) => unimplemented!("http-async feature is disabled"),
+
+            #[cfg(all(feature = "http-sync", not(feature = "http-async")))]
+            Self::Matrix(_) | Self::Slack(_) | Self::Telegram(_) | Self::Webhook(_) => {
+                unimplemented!("http-async feature is disabled")
+            }
         }
         Ok(())
     }

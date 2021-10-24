@@ -41,6 +41,7 @@ impl Display for ParseMode {
 }
 
 #[test]
+#[cfg(feature = "serde")]
 fn can_serde_parse_parsemode() {
     let data = ParseMode::Markdown;
     crate::test_helper::can_serde_parse(&data);

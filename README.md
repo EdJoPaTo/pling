@@ -7,11 +7,13 @@ The name of this Rust crate is inspired by the notification arrival sound.
 ## Services
 
 - [Command (on the same host)](docs/command.md)
-- [Email](docs/email.md)
-- [Matrix](docs/matrix.md)
-- [Slack](docs/slack.md)
+- [Email](docs/email.md) (untested)
+- [Matrix](docs/matrix.md) (untested)
+- [Slack](docs/slack.md) (untested)
 - [Telegram](docs/telegram.md)
 - [Webhook](docs/webhook.md)
+
+For ways to integrate this crate into your rust application programmatically check [its docs.rs entry](https://docs.rs/pling)
 
 ## Contributions welcome!
 

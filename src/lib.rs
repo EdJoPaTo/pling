@@ -14,7 +14,7 @@ version = "…"
 features = ["email"]
 ```
 
-```rust
+```rust no_run
 let notifications = pling::Notification::from_env();
 dbg!(&notifications);
 for notifier in notifications {
@@ -80,26 +80,27 @@ pub(crate) const USER_AGENT: &str = concat!(
 ///
 /// # Examples
 /// Loading configuration from environment variables is relatively easy.
-/// ```
+/// ```rust no_run
 /// let notifications = pling::Notification::from_env();
 /// dbg!(&notifications);
 /// for notifier in notifications {
-///   // TODO: notifier.send_sync("Hello world!");
+///   notifier.send_sync("Hello from env!");
 /// }
 /// ```
 ///
 /// With the `serde-derive` feature you can also load a config via Serde like YAML, TOML or JSON.
-/// ```
+/// ```rust ignore
 /// let yaml = r#"---
 /// - Telegram:
 ///     bot_token: 123:ABC
 ///     target_chat: 1234
 /// "#;
-/// let notifications: Vec<pling::Notification> = serde_yaml::from_str(yaml).expect("failed to parse");
+/// let notifications: Vec<pling::Notification> = serde_yaml::from_str(yaml)?;
 /// dbg!(&notifications);
 /// for notifier in notifications {
-///   // TODO: notifier.send_sync("Hello world!");
+///   notifier.send_sync("Hello from yaml!");
 /// }
+/// # Ok::<(), anyhow::Error>(())
 /// ```
 pub enum Notification {
     Command(Command),

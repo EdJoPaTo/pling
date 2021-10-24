@@ -29,11 +29,19 @@ name = "email"
 required-features = ["email"]
 
 [[example]]
+name = "matrix"
+required-features = ["http-sync"]
+
+[[example]]
 name = "slack"
 required-features = ["http-sync"]
 
 [[example]]
 name = "telegram"
+required-features = ["http-sync"]
+
+[[example]]
+name = "webhook"
 required-features = ["http-sync"]
 
 [dependencies]

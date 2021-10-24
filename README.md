@@ -7,6 +7,8 @@ The name of this Rust crate is inspired by the notification arrival sound.
 ## Services
 
 - [Command (on the same host)](docs/command.md)
+- [Email](docs/email.md)
+- [Matrix](docs/matrix.md)
 - [Slack](docs/slack.md)
 - [Telegram](docs/telegram.md)
 - [Webhook](docs/webhook.md)

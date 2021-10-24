@@ -25,6 +25,10 @@ http-async = ["url", "reqwest"]
 http-sync = ["url", "ureq"]
 
 [[example]]
+name = "email"
+required-features = ["email"]
+
+[[example]]
 name = "slack"
 required-features = ["http-sync"]
 

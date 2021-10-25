@@ -15,6 +15,10 @@ The name of this Rust crate is inspired by the notification arrival sound.
 
 For ways to integrate this crate into your rust application programmatically check [its docs.rs entry](https://docs.rs/pling)
 
+Could be added in the future (feel free to create an Issue or PR):
+- [Zulip](https://zulip.com/api/)
+- mention or add your own!
+
 ## Contributions welcome!
 
 This crate is fairly new, and I only have a limited view where this is useful.

@@ -17,21 +17,13 @@ keywords = ["notification", "telegram", "slack"]
 
 # See more keys and their definitions at https://doc.rust-lang.org/cargo/reference/manifest.html
 
-[features]
-default = [
-    "http-sync",
-]
-serde-derive = ["serde", "url/serde"]
-
-email = ["lettre"]
-
-# Feature contains all HTTP APIs in an either sync or async manner.
-http-async = ["url", "reqwest"]
-http-sync = ["url", "ureq"]
-
 [[example]]
 name = "all_env"
 required-features = []
+
+[[example]]
+name = "desktop"
+required-features = ["desktop"]
 
 [[example]]
 name = "email"
@@ -53,6 +45,19 @@ required-features = ["http-sync"]
 name = "webhook"
 required-features = ["http-sync"]
 
+[features]
+default = [
+    "http-sync",
+]
+serde-derive = ["serde", "url/serde"]
+
+desktop = ["notify-rust"]
+email = ["lettre"]
+
+# Feature contains all HTTP APIs in an either sync or async manner.
+http-async = ["url", "reqwest"]
+http-sync = ["url", "ureq"]
+
 [dependencies]
 anyhow = "1"
 
@@ -61,6 +66,10 @@ version = "0.10.0-rc.3"
 optional = true
 default-features = false
 features = ["smtp-transport", "hostname", "builder", "rustls-tls"]
+
+[dependencies.notify-rust]
+version = "4"
+optional = true
 
 [dependencies.reqwest]
 version = "0.11"

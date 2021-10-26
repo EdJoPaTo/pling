@@ -37,6 +37,11 @@ mod serde_helper;
 mod command;
 pub use command::Command;
 
+#[cfg(feature = "desktop")]
+mod desktop;
+#[cfg(feature = "desktop")]
+pub use desktop::Desktop;
+
 #[cfg(feature = "email")]
 mod email;
 #[cfg(feature = "email")]
@@ -105,6 +110,9 @@ pub(crate) const USER_AGENT: &str = concat!(
 pub enum Notification {
     Command(Command),
 
+    #[cfg(feature = "desktop")]
+    Desktop(Desktop),
+
     #[cfg(feature = "email")]
     Email(Email),
 
@@ -127,6 +135,10 @@ impl Notification {
         let mut result = Vec::new();
 
         if let Some(n) = Command::from_env() {
+            result.push(n.into());
+        }
+        #[cfg(feature = "desktop")]
+        if let Some(n) = Desktop::from_env() {
             result.push(n.into());
         }
         #[cfg(feature = "email")]
@@ -167,6 +179,9 @@ impl Notification {
         match self {
             Self::Command(cmd) => cmd.send_sync(text)?,
 
+            #[cfg(feature = "desktop")]
+            Self::Desktop(o) => o.send_sync(text)?,
+
             #[cfg(feature = "email")]
             Self::Email(o) => o.send_sync(text)?,
 
@@ -200,6 +215,9 @@ impl Notification {
     pub async fn send_async(&self, text: &str) -> anyhow::Result<()> {
         match self {
             Self::Command(cmd) => cmd.send_sync(text)?,
+
+            #[cfg(feature = "desktop")]
+            Self::Desktop(o) => o.send_sync(text)?,
 
             #[cfg(feature = "email")]
             Self::Email(o) => o.send_sync(text)?,

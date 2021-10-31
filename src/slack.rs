@@ -7,7 +7,7 @@ pub struct Slack {
     pub hook: Url,
 }
 
-impl From<Slack> for crate::Notification {
+impl From<Slack> for crate::Notifier {
     fn from(slack: Slack) -> Self {
         Self::Slack(slack)
     }
@@ -15,7 +15,7 @@ impl From<Slack> for crate::Notification {
 
 impl Slack {
     #[must_use]
-    /// Loads the Slack notification config from environment variables.
+    /// Loads the Slack config from environment variables.
     /// The following variables are used:
     /// - `SLACK_HOOK`
     ///

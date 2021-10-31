@@ -24,7 +24,7 @@ pub struct Telegram {
     pub disable_notification: bool,
 }
 
-impl From<Telegram> for crate::Notification {
+impl From<Telegram> for crate::Notifier {
     fn from(tg: Telegram) -> Self {
         Self::Telegram(tg)
     }
@@ -42,7 +42,7 @@ impl Telegram {
     }
 
     #[must_use]
-    /// Loads the Telegram notification config from environment variables.
+    /// Loads the Telegram config from environment variables.
     /// The following variables are used:
     /// - `TELEGRAM_BOT_TOKEN`
     /// - `TELEGRAM_TARGET_CHAT`

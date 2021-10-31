@@ -5,7 +5,7 @@ pub struct Desktop {
     pub summary: Option<String>,
 }
 
-impl From<Desktop> for crate::Notification {
+impl From<Desktop> for crate::Notifier {
     fn from(desktop: Desktop) -> Self {
         Self::Desktop(desktop)
     }

@@ -7,7 +7,7 @@ pub struct Webhook {
     pub hook: Url,
 }
 
-impl From<Webhook> for crate::Notification {
+impl From<Webhook> for crate::Notifier {
     fn from(webhook: Webhook) -> Self {
         Self::Webhook(webhook)
     }
@@ -15,7 +15,7 @@ impl From<Webhook> for crate::Notification {
 
 impl Webhook {
     #[must_use]
-    /// Loads the Webhook notification config from environment variables.
+    /// Loads the Webhook config from environment variables.
     /// The following variables are used:
     /// - `WEBHOOK_URL`
     ///

@@ -14,7 +14,7 @@ pub struct Command {
     pub arguments: Vec<String>,
 }
 
-impl From<Command> for crate::Notification {
+impl From<Command> for crate::Notifier {
     fn from(command: Command) -> Self {
         Self::Command(command)
     }

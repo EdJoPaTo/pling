@@ -15,9 +15,9 @@ features = ["email"]
 ```
 
 ```rust no_run
-let notifications = pling::Notification::from_env();
-dbg!(&notifications);
-for notifier in notifications {
+let notifiers = pling::Notifier::from_env();
+dbg!(&notifiers);
+for notifier in notifiers {
   notifier.send_sync("Hello world!");
 }
 ```
@@ -81,14 +81,14 @@ pub(crate) const USER_AGENT: &str = concat!(
 
 #[derive(Debug, Clone)]
 #[cfg_attr(feature = "serde", derive(serde::Serialize, serde::Deserialize))]
-/// Notification which can be used to provide easily configurable notifications for your application.
+/// Notifiers which can be used to provide easily configurable notifications for your application.
 ///
 /// # Examples
 /// Loading configuration from environment variables is relatively easy.
 /// ```rust no_run
-/// let notifications = pling::Notification::from_env();
-/// dbg!(&notifications);
-/// for notifier in notifications {
+/// let notifiers = pling::Notifier::from_env();
+/// dbg!(&notifiers);
+/// for notifier in notifiers {
 ///   notifier.send_sync("Hello from env!");
 /// }
 /// ```
@@ -100,14 +100,14 @@ pub(crate) const USER_AGENT: &str = concat!(
 ///     bot_token: 123:ABC
 ///     target_chat: 1234
 /// "#;
-/// let notifications: Vec<pling::Notification> = serde_yaml::from_str(yaml)?;
-/// dbg!(&notifications);
-/// for notifier in notifications {
+/// let notifiers: Vec<pling::Notifier> = serde_yaml::from_str(yaml)?;
+/// dbg!(&notifiers);
+/// for notifier in notifiers {
 ///   notifier.send_sync("Hello from yaml!");
 /// }
 /// # Ok::<(), anyhow::Error>(())
 /// ```
-pub enum Notification {
+pub enum Notifier {
     Command(Command),
 
     #[cfg(feature = "desktop")]
@@ -129,7 +129,7 @@ pub enum Notification {
     Webhook(Webhook),
 }
 
-impl Notification {
+impl Notifier {
     #[must_use]
     pub fn from_env() -> Vec<Self> {
         let mut result = Vec::new();

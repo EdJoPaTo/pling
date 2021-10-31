@@ -16,7 +16,7 @@ pub struct Email {
     pub subject: String,
 }
 
-impl From<Email> for crate::Notification {
+impl From<Email> for crate::Notifier {
     fn from(email: Email) -> Self {
         Self::Email(email)
     }
@@ -50,7 +50,7 @@ impl Email {
         })
     }
 
-    /// Send a Mail notification synchronously.
+    /// Send a Mail synchronously.
     ///
     /// # Errors
     ///

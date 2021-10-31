@@ -9,7 +9,7 @@ pub struct Matrix {
     pub access_token: String,
 }
 
-impl From<Matrix> for crate::Notification {
+impl From<Matrix> for crate::Notifier {
     fn from(matrix: Matrix) -> Self {
         Self::Matrix(matrix)
     }
@@ -17,6 +17,13 @@ impl From<Matrix> for crate::Notification {
 
 impl Matrix {
     #[must_use]
+    /// Loads the Matrix config from environment variables.
+    /// The following variables are used:
+    /// - `MATRIX_HOMESERVER`
+    /// - `MATRIX_ROOM_ID`
+    /// - `MATRIX_ACCESS_TOKEN`
+    ///
+    /// When any variable is unset or not valid None is returned.
     pub fn from_env() -> Option<Self> {
         let homeserver = std::env::var("MATRIX_HOMESERVER").ok()?.parse().ok()?;
         let room_id = std::env::var("MATRIX_ROOM_ID").ok()?;
@@ -37,11 +44,11 @@ impl Matrix {
     }
 
     #[cfg(feature = "http-sync")]
-    /// Send a Slack notification synchronously.
+    /// Send a Matrix notification synchronously.
     ///
     /// # Errors
     ///
-    /// This method errors when the request could not be send or the not be handled by the Slack API.
+    /// This method errors when the request could not be send or the not be handled by the Matrix API.
     pub fn send_sync(&self, text: &str) -> anyhow::Result<()> {
         ureq::post(self.generate_url()?.as_str())
             .set("User-Agent", crate::USER_AGENT)
@@ -50,11 +57,11 @@ impl Matrix {
     }
 
     #[cfg(feature = "http-async")]
-    /// Send a Slack notification asynchronously.
+    /// Send a Matrix notification asynchronously.
     ///
     /// # Errors
     ///
-    /// This method errors when the request could not be send or the not be handled by the Slack API.
+    /// This method errors when the request could not be send or the not be handled by the Matrix API.
     pub async fn send_async(&self, text: &str) -> anyhow::Result<()> {
         reqwest::ClientBuilder::new()
             .user_agent(crate::USER_AGENT)

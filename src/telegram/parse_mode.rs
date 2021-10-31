@@ -49,6 +49,7 @@ fn can_serde_parse_parsemode() {
 
 #[test]
 fn can_string_parse_parsemode() {
-    let data = ParseMode::Markdown;
-    crate::test_helper::can_string_parse(&data);
+    crate::test_helper::can_string_parse(&ParseMode::Markdown);
+    crate::test_helper::can_string_parse(&ParseMode::MarkdownV2);
+    crate::test_helper::can_string_parse(&ParseMode::Html);
 }

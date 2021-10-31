@@ -6,7 +6,7 @@ license = "MIT"
 repository = "https://github.com/EdJoPaTo/pling"
 authors = ["EdJoPaTo <pling-rust@edjopato.de>"]
 edition = "2018"
-rust-version = "1.56.0"
+rust-version = "1.54.0"
 categories = [
     "command-line-interface",
     "email",

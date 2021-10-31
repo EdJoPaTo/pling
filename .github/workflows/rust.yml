@@ -24,6 +24,8 @@ jobs:
           - --no-default-features
           - "" # default features
           - --all-features
+          - --no-default-features --features=sync
+          - --no-default-features --features=async
           - --no-default-features --features=desktop
           - --no-default-features --features=email
           - --no-default-features --features=http-sync

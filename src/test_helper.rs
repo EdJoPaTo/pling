@@ -1,3 +1,5 @@
+#![allow(dead_code)]
+
 #[cfg(feature = "serde")]
 pub fn can_serde_parse<T>(input: &T)
 where

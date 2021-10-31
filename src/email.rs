@@ -50,7 +50,6 @@ impl Email {
         })
     }
 
-    #[cfg(feature = "http-sync")]
     /// Send a Mail notification synchronously.
     ///
     /// # Errors

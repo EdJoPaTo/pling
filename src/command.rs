@@ -1,7 +1,7 @@
 use std::io::ErrorKind;
 use std::string::ToString;
 
-#[derive(Debug, Clone, PartialEq, Eq)]
+#[derive(Clone, PartialEq, Eq)]
 #[cfg_attr(feature = "serde", derive(serde::Serialize, serde::Deserialize))]
 #[doc = include_str!("../docs/command.md")]
 pub struct Command {

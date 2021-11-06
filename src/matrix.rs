@@ -1,6 +1,6 @@
 use url::Url;
 
-#[derive(Debug, Clone, PartialEq, Eq)]
+#[derive(Clone, PartialEq, Eq)]
 #[cfg_attr(feature = "serde", derive(serde::Serialize, serde::Deserialize))]
 #[doc = include_str!("../docs/matrix.md")]
 pub struct Matrix {

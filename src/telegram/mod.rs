@@ -2,7 +2,7 @@ mod target_chat;
 
 pub use target_chat::TargetChat;
 
-#[derive(Debug, Clone, PartialEq, Eq)]
+#[derive(Clone, PartialEq, Eq)]
 #[cfg_attr(feature = "serde", derive(serde::Serialize, serde::Deserialize))]
 #[doc = include_str!("../../docs/telegram.md")]
 pub struct Telegram {
@@ -130,18 +130,6 @@ const fn str_bool(value: bool) -> &'static str {
     } else {
         "false"
     }
-}
-
-#[test]
-#[cfg(feature = "serde")]
-fn can_serde_parse_telegram() {
-    let telegram = Telegram {
-        bot_token: "123:ABC".into(),
-        target_chat: TargetChat::Id(1234),
-        disable_web_page_preview: false,
-        disable_notification: false,
-    };
-    crate::test_helper::can_serde_parse(&telegram);
 }
 
 #[test]

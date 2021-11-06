@@ -67,9 +67,6 @@ mod webhook;
 #[cfg(any(feature = "http-sync", feature = "http-async"))]
 pub use webhook::Webhook;
 
-#[cfg(test)]
-mod test_helper;
-
 #[cfg(any(feature = "http-sync", feature = "http-async"))]
 pub(crate) const USER_AGENT: &str = concat!(
     env!("CARGO_PKG_NAME"),
@@ -79,7 +76,7 @@ pub(crate) const USER_AGENT: &str = concat!(
     env!("CARGO_PKG_REPOSITORY"),
 );
 
-#[derive(Debug, Clone)]
+#[derive(Clone)]
 #[cfg_attr(feature = "serde", derive(serde::Serialize, serde::Deserialize))]
 /// Notifiers which can be used to provide easily configurable notifications for your application.
 ///

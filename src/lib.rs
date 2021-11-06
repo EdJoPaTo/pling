@@ -60,7 +60,7 @@ pub use slack::Slack;
 #[cfg(any(feature = "http-sync", feature = "http-async"))]
 mod telegram;
 #[cfg(any(feature = "http-sync", feature = "http-async"))]
-pub use telegram::{ParseMode as TelegramParseMode, TargetChat as TelegramTargetChat, Telegram};
+pub use telegram::{TargetChat as TelegramTargetChat, Telegram};
 
 #[cfg(any(feature = "http-sync", feature = "http-async"))]
 mod webhook;
@@ -190,7 +190,7 @@ impl Notifier {
             #[cfg(feature = "http-sync")]
             Self::Slack(o) => o.send_sync(text)?,
             #[cfg(feature = "http-sync")]
-            Self::Telegram(o) => o.send_sync(text, None, false, false)?,
+            Self::Telegram(o) => o.send_sync(text)?,
             #[cfg(feature = "http-sync")]
             Self::Webhook(o) => o.send_sync(text)?,
 
@@ -227,7 +227,7 @@ impl Notifier {
             #[cfg(feature = "http-async")]
             Self::Slack(o) => o.send_async(text).await?,
             #[cfg(feature = "http-async")]
-            Self::Telegram(o) => o.send_async(text, None, false, false).await?,
+            Self::Telegram(o) => o.send_async(text).await?,
             #[cfg(feature = "http-async")]
             Self::Webhook(o) => o.send_async(text).await?,
 

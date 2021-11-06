@@ -44,11 +44,11 @@ jobs:
             clippyargs: -W clippy::pedantic
             features: --all-features
 
-          # Check if it is still running on older Rust versions.
-          # Sometimes they dont have lint bugfixes which results in false positives -> Dont error, just warn.
-          # Also some specified lints are not yet existing in the older rust version -> allow unknown lints.
+          # Check the minimum supported Rust version (MSRV).
+          # Sometimes old rust versions don't yet have the lints (allow unknown) or don't have fixes in lints (false positives -> don't error, just warn).
+          # When a certain distro is a target look up its version: https://repology.org/project/rust/versions
           - os: ubuntu-latest
-            toolchain: 1.54.0 # Minimum Supported Rust Version
+            toolchain: 1.54.0
             clippyargs: -A unknown-lints
             features: --all-features
     steps:

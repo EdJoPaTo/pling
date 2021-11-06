@@ -16,7 +16,6 @@ features = ["email"]
 
 ```rust no_run
 let notifiers = pling::Notifier::from_env();
-dbg!(&notifiers);
 for notifier in notifiers {
   notifier.send_sync("Hello world!");
 }
@@ -84,7 +83,6 @@ pub(crate) const USER_AGENT: &str = concat!(
 /// Loading configuration from environment variables is relatively easy.
 /// ```rust no_run
 /// let notifiers = pling::Notifier::from_env();
-/// dbg!(&notifiers);
 /// for notifier in notifiers {
 ///   notifier.send_sync("Hello from env!");
 /// }
@@ -98,7 +96,6 @@ pub(crate) const USER_AGENT: &str = concat!(
 ///     target_chat: 1234
 /// "#;
 /// let notifiers: Vec<pling::Notifier> = serde_yaml::from_str(yaml)?;
-/// dbg!(&notifiers);
 /// for notifier in notifiers {
 ///   notifier.send_sync("Hello from yaml!");
 /// }

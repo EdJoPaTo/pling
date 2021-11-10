@@ -28,7 +28,7 @@ for notifier in notifiers {
 - `http-sync` provides HTTP APIs via [ureq](https://crates.io/crates/ureq) (Enabled by default)
 - `http-async` provides HTTP APIs via [reqwest](https://crates.io/crates/reqwest)
 
-!*/
+*/
 
 #[cfg(feature = "serde")]
 mod serde_helper;

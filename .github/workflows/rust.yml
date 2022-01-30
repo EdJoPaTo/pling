@@ -124,6 +124,12 @@ jobs:
 
       - uses: actions/checkout@v2
 
+      - name: Fetch dependencies
+        uses: actions-rs/cargo@v1
+        with:
+          command: fetch
+          args: --verbose
+
       - name: Build
         uses: actions-rs/cargo@v1
         with:

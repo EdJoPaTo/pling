@@ -79,7 +79,7 @@ http-sync = ["url", "ureq"]
 anyhow = "1"
 
 [dependencies.lettre]
-version = "=0.10.0-rc.6"
+version = "=0.10.0-rc.7"
 optional = true
 default-features = false
 features = ["smtp-transport", "hostname", "builder", "rustls-tls"]

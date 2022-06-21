@@ -7,7 +7,7 @@ repository = "https://github.com/EdJoPaTo/pling"
 documentation = "https://docs.rs/pling"
 authors = ["EdJoPaTo <pling-rust@edjopato.de>"]
 edition = "2021"
-rust-version = "1.56.0"
+rust-version = "1.58.1"
 categories = [
     "command-line-interface",
     "email",

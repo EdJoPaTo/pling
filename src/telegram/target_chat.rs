@@ -29,8 +29,8 @@ impl FromStr for TargetChat {
 impl ToString for TargetChat {
     fn to_string(&self) -> String {
         match self {
-            TargetChat::Id(id) => id.to_string(),
-            TargetChat::Username(username) => username.to_string(),
+            Self::Id(id) => id.to_string(),
+            Self::Username(username) => username.to_string(),
         }
     }
 }

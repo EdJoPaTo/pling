@@ -43,14 +43,6 @@ jobs:
             os: ubuntu-22.04
             features: --all-features
             clippyargs: -W clippy::pedantic
-
-          # Check the minimum supported Rust version (MSRV).
-          # Sometimes old rust versions don't yet have the lints (allow unknown) or don't have fixes in lints (false positives -> don't error, just warn).
-          # When a certain distro is a target look up its version: https://repology.org/project/rust/versions
-          - os: ubuntu-22.04
-            toolchain: 1.58.1
-            clippyargs: -A unknown-lints
-            features: --all-features
     steps:
       - name: Setup Rust
         uses: actions-rs/toolchain@v1

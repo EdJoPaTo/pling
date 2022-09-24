@@ -196,6 +196,7 @@ impl Notifier {
         Ok(())
     }
 
+    #[allow(clippy::unused_async)]
     /// Send the notification asynchronously.
     ///
     /// # Errors

@@ -18,11 +18,8 @@ impl From<i64> for TargetChat {
 impl FromStr for TargetChat {
     type Err = ();
     fn from_str(s: &str) -> Result<Self, Self::Err> {
-        if let Ok(id) = s.parse::<i64>() {
-            Ok(Self::Id(id))
-        } else {
-            Ok(Self::Username(s.to_string()))
-        }
+        Ok(s.parse::<i64>()
+            .map_or_else(|_| Self::Username(s.to_string()), Self::Id))
     }
 }
 

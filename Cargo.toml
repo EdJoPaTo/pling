@@ -4,7 +4,6 @@ description = "Send notifications via Slack, Telegram, E-Mail, ..."
 version = "0.2.0"
 license = "MIT"
 repository = "https://github.com/EdJoPaTo/pling"
-documentation = "https://docs.rs/pling"
 authors = ["EdJoPaTo <pling-rust@edjopato.de>"]
 edition = "2021"
 categories = [

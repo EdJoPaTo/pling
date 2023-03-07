@@ -1,5 +1,3 @@
-use std::str::FromStr;
-
 #[derive(Debug, Clone, PartialEq, Eq, PartialOrd, Ord)]
 #[cfg_attr(feature = "serde", derive(serde::Serialize, serde::Deserialize))]
 #[cfg_attr(feature = "serde", serde(untagged))]
@@ -15,7 +13,7 @@ impl From<i64> for TargetChat {
     }
 }
 
-impl FromStr for TargetChat {
+impl core::str::FromStr for TargetChat {
     type Err = ();
     fn from_str(s: &str) -> Result<Self, Self::Err> {
         Ok(s.parse::<i64>()

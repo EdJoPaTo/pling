@@ -52,7 +52,7 @@ required-features = ["http-sync"]
 
 [features]
 default = ["sync"]
-serde-derive = ["serde", "url/serde"]
+serde = ["dep:serde", "url?/serde"]
 
 sync = [
 	"desktop",

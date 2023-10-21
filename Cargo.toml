@@ -7,18 +7,18 @@ repository = "https://github.com/EdJoPaTo/pling"
 authors = ["EdJoPaTo <pling-rust@edjopato.de>"]
 edition = "2021"
 categories = [
-    "command-line-interface",
-    "email",
-    "network-programming",
-    "web-programming::http-client",
+	"command-line-interface",
+	"email",
+	"network-programming",
+	"web-programming::http-client",
 ]
 keywords = ["notification", "notify", "telegram", "slack"]
 include = [
-    "docs/**/*",
-    "examples/**/*",
-    "src/**/*",
-    "LICENSE",
-    "README.md",
+	"docs/**/*",
+	"examples/**/*",
+	"src/**/*",
+	"LICENSE",
+	"README.md",
 ]
 
 # See more keys and their definitions at https://doc.rust-lang.org/cargo/reference/manifest.html
@@ -56,14 +56,14 @@ default = ["sync"]
 serde-derive = ["serde", "url/serde"]
 
 sync = [
-    "desktop",
-    "email",
-    "http-sync"
+	"desktop",
+	"email",
+	"http-sync"
 ]
 async = [
-    "desktop",
-    "email",
-    "http-async"
+	"desktop",
+	"email",
+	"http-async"
 ]
 
 desktop = ["notify-rust"]
@@ -91,11 +91,11 @@ version = "0.11"
 optional = true
 default-features = false
 features = [
-    "rustls-tls",
-    "socks", # Socks5 Proxy support
-    "brotli", # response body decompression
-    "deflate", # response body decompression
-    "gzip", # response body decompression
+	"rustls-tls",
+	"socks", # Socks5 Proxy support
+	"brotli", # response body decompression
+	"deflate", # response body decompression
+	"gzip", # response body decompression
 ]
 
 [dependencies.serde]

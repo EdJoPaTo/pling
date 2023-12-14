@@ -65,12 +65,12 @@ async = [
 	"http-async"
 ]
 
-desktop = ["notify-rust"]
-email = ["lettre"]
+desktop = ["dep:notify-rust"]
+email = ["dep:lettre"]
 
 # Feature contains all HTTP APIs in an either sync or async manner.
-http-async = ["url", "reqwest"]
-http-sync = ["url", "ureq"]
+http-async = ["dep:url", "dep:reqwest"]
+http-sync = ["dep:url", "dep:ureq"]
 
 [dependencies]
 anyhow = "1"

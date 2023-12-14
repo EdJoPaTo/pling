@@ -22,13 +22,6 @@ for notifier in notifiers {
 }
 ```
 
-## Available Cargo features
-
-- `serde-derive` provides [serde](https://crates.io/crates/serde) Serialization / Deserialization implementations for structs.
-- `email` provides Email sending via [lettre](https://crates.io/crates/lettre)
-- `http-sync` provides HTTP APIs via [ureq](https://crates.io/crates/ureq) (Enabled by default)
-- `http-async` provides HTTP APIs via [reqwest](https://crates.io/crates/reqwest)
-
 */
 
 #[cfg(feature = "serde")]

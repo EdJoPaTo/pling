@@ -27,7 +27,9 @@ for notifier in notifiers {
 #[cfg(feature = "serde")]
 mod serde_helper;
 
+#[cfg(feature = "command")]
 mod command;
+#[cfg(feature = "command")]
 pub use command::Command;
 
 #[cfg(feature = "desktop")]
@@ -71,6 +73,7 @@ pub(crate) const USER_AGENT: &str = concat!(
 
 #[derive(Clone)]
 #[cfg_attr(feature = "serde", derive(serde::Serialize, serde::Deserialize))]
+#[non_exhaustive]
 /// Notifiers which can be used to provide easily configurable notifications for your application.
 ///
 /// # Examples
@@ -96,6 +99,7 @@ pub(crate) const USER_AGENT: &str = concat!(
 /// # Ok::<(), anyhow::Error>(())
 /// ```
 pub enum Notifier {
+    #[cfg(feature = "command")]
     Command(Command),
 
     #[cfg(feature = "desktop")]
@@ -122,6 +126,7 @@ impl Notifier {
     pub fn from_env() -> Vec<Self> {
         let mut result = Vec::new();
 
+        #[cfg(feature = "command")]
         if let Some(n) = Command::from_env() {
             result.push(n.into());
         }
@@ -165,6 +170,7 @@ impl Notifier {
     /// For example it won't work to `Telegram::send_sync` when the feature `http-sync` isn't enabled.
     pub fn send_sync(&self, text: &str) -> anyhow::Result<()> {
         match self {
+            #[cfg(feature = "command")]
             Self::Command(cmd) => cmd.send_sync(text)?,
 
             #[cfg(feature = "desktop")]
@@ -186,6 +192,9 @@ impl Notifier {
             Self::Matrix(_) | Self::Slack(_) | Self::Telegram(_) | Self::Webhook(_) => {
                 unimplemented!("http-sync feature is disabled")
             }
+
+            #[allow(unreachable_patterns)]
+            _ => unimplemented!("feature is disabled on compile time"),
         }
         Ok(())
     }
@@ -203,6 +212,7 @@ impl Notifier {
     /// For example it won't work to `Telegram::send_async` when the feature `http-async` isn't enabled.
     pub async fn send_async(&self, text: &str) -> anyhow::Result<()> {
         match self {
+            #[cfg(feature = "command")]
             Self::Command(cmd) => cmd.send_sync(text)?,
 
             #[cfg(feature = "desktop")]
@@ -224,6 +234,9 @@ impl Notifier {
             Self::Matrix(_) | Self::Slack(_) | Self::Telegram(_) | Self::Webhook(_) => {
                 unimplemented!("http-async feature is disabled")
             }
+
+            #[allow(unreachable_patterns)]
+            _ => unimplemented!("feature is disabled on compile time"),
         }
         Ok(())
     }

@@ -55,16 +55,19 @@ default = ["sync"]
 serde = ["dep:serde", "url?/serde"]
 
 sync = [
+	"command",
 	"desktop",
 	"email",
 	"http-sync"
 ]
 async = [
+	"command",
 	"desktop",
 	"email",
 	"http-async"
 ]
 
+command = []
 desktop = ["dep:notify-rust"]
 email = ["dep:lettre"]
 

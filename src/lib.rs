@@ -158,6 +158,7 @@ impl Notifier {
         result
     }
 
+    #[allow(unused_variables)]
     /// Send the notification synchronously.
     ///
     /// # Errors
@@ -192,14 +193,12 @@ impl Notifier {
             Self::Matrix(_) | Self::Slack(_) | Self::Telegram(_) | Self::Webhook(_) => {
                 unimplemented!("http-sync feature is disabled")
             }
-
-            #[allow(unreachable_patterns)]
-            _ => unimplemented!("feature is disabled on compile time"),
         }
+        #[allow(unreachable_code)]
         Ok(())
     }
 
-    #[allow(clippy::unused_async)]
+    #[allow(unused_variables, clippy::unused_async)]
     /// Send the notification asynchronously.
     ///
     /// # Errors
@@ -234,10 +233,8 @@ impl Notifier {
             Self::Matrix(_) | Self::Slack(_) | Self::Telegram(_) | Self::Webhook(_) => {
                 unimplemented!("http-async feature is disabled")
             }
-
-            #[allow(unreachable_patterns)]
-            _ => unimplemented!("feature is disabled on compile time"),
         }
+        #[allow(unreachable_code)]
         Ok(())
     }
 }

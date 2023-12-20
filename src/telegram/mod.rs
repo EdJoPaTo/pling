@@ -11,13 +11,13 @@ pub struct Telegram {
 
     #[cfg_attr(
         feature = "serde",
-        serde(default, skip_serializing_if = "crate::serde_helper::is_default")
+        serde(default, skip_serializing_if = "core::ops::Not::not")
     )]
     pub disable_web_page_preview: bool,
 
     #[cfg_attr(
         feature = "serde",
-        serde(default, skip_serializing_if = "crate::serde_helper::is_default")
+        serde(default, skip_serializing_if = "core::ops::Not::not")
     )]
     pub disable_notification: bool,
 }

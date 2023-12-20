@@ -24,9 +24,6 @@ for notifier in notifiers {
 
 */
 
-#[cfg(feature = "serde")]
-mod serde_helper;
-
 #[cfg(feature = "command")]
 mod command;
 #[cfg(feature = "command")]

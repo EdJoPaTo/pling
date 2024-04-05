@@ -1,55 +1,36 @@
 use url::Url;
 
-#[derive(Clone, PartialEq, Eq)]
-#[doc = include_str!("../docs/webhook.md")]
 pub struct Webhook {
-    pub hook: Url,
-}
-
-impl From<Webhook> for crate::Notifier {
-    fn from(webhook: Webhook) -> Self {
-        Self::Webhook(webhook)
-    }
+    pub webhook: Url,
 }
 
 impl Webhook {
-    /// Loads the Webhook config from environment variables.
-    /// The following variables are used:
-    /// - `WEBHOOK_URL`
-    ///
-    /// When `WEBHOOK_URL` is unset or not a valid URL None is returned.
-    #[must_use]
-    pub fn from_env() -> Option<Self> {
-        let hook = std::env::var("WEBHOOK_URL").ok()?.parse().ok()?;
-        Some(Self { hook })
-    }
-
-    /// Send a Webhook via [`ureq`].
+    /// Send a Webhook via [`ureq`] to the given URL.
     ///
     /// # Errors
     ///
     /// This method errors when the request could not be send or when the target server returns a not successful status.
     #[allow(clippy::result_large_err)]
     #[cfg(feature = "ureq")]
-    pub fn send_ureq(&self, text: &str) -> Result<(), ureq::Error> {
-        ureq::post(self.hook.as_str())
+    pub fn send_ureq(&self, body: &str) -> Result<(), ureq::Error> {
+        ureq::post(self.webhook.as_str())
             .set("User-Agent", crate::USER_AGENT)
-            .send_string(text)?;
+            .send_string(body)?;
         Ok(())
     }
 
-    /// Send a Webhook via [`reqwest`].
+    /// Send a Webhook via [`reqwest`] to the given URL.
     ///
     /// # Errors
     ///
     /// This method errors when the request could not be send or when the target server returns a not successful status.
     #[cfg(feature = "reqwest")]
-    pub async fn send_reqwest(&self, text: &str) -> reqwest::Result<()> {
+    pub async fn send_reqwest(&self, body: &str) -> reqwest::Result<()> {
         reqwest::ClientBuilder::new()
             .user_agent(crate::USER_AGENT)
             .build()?
-            .post(self.hook.clone())
-            .body(text.to_string())
+            .post(self.webhook.clone())
+            .body(body.to_owned())
             .send()
             .await?
             .error_for_status()?;

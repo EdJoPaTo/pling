@@ -1,5 +1,5 @@
-#[derive(Debug, Clone, PartialEq, Eq, PartialOrd, Ord)]
 /// Unique identifier for the target chat or username of the target channel (in the format `@channelusername`)
+#[derive(Debug, Clone, PartialEq, Eq, PartialOrd, Ord, Hash)]
 pub enum TargetChat {
     Id(i64),
     Username(String),
@@ -12,10 +12,16 @@ impl From<i64> for TargetChat {
 }
 
 impl core::str::FromStr for TargetChat {
-    type Err = ();
-    fn from_str(s: &str) -> Result<Self, Self::Err> {
-        Ok(s.parse::<i64>()
-            .map_or_else(|_| Self::Username(s.to_string()), Self::Id))
+    type Err = &'static str;
+    fn from_str(str: &str) -> Result<Self, Self::Err> {
+        if let Ok(id) = str.parse::<i64>() {
+            return Ok(Self::Id(id));
+        }
+
+        if !str.starts_with('@') {
+            return Err("Telegram username needs to start with an @ symbol");
+        }
+        Ok(Self::Username(str.to_owned()))
     }
 }
 
@@ -38,4 +44,11 @@ fn can_parse_id_from_str() {
 fn can_parse_username_from_str() {
     let result = "@HelloWorld".parse::<TargetChat>().unwrap();
     assert_eq!(result, TargetChat::Username("@HelloWorld".into()));
+}
+
+#[test]
+#[should_panic = "start with an @ symbol"]
+fn username_no_at() {
+    let result = "HelloWorld".parse::<TargetChat>().unwrap();
+    dbg!(result);
 }

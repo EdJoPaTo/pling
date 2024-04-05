@@ -1,29 +1,16 @@
 use url::Url;
 
-#[derive(Clone, PartialEq, Eq)]
-#[doc = include_str!("../docs/slack.md")]
+/// Documentation: <https://api.slack.com/messaging/webhooks#getting_started>
+///
+/// TLDR:
+/// - Create app
+/// - Enable Incoming Webhooks
+/// - Use the <https://hooks.slack.com/…> URL
 pub struct Slack {
-    pub hook: Url,
-}
-
-impl From<Slack> for crate::Notifier {
-    fn from(slack: Slack) -> Self {
-        Self::Slack(slack)
-    }
+    pub webhook: Url,
 }
 
 impl Slack {
-    /// Loads the Slack config from environment variables.
-    /// The following variables are used:
-    /// - `SLACK_HOOK`
-    ///
-    /// When `SLACK_HOOK` is unset or not a valid URL None is returned.
-    #[must_use]
-    pub fn from_env() -> Option<Self> {
-        let hook = std::env::var("SLACK_HOOK").ok()?.parse().ok()?;
-        Some(Self { hook })
-    }
-
     /// Send a Slack notification via [`ureq`].
     ///
     /// # Errors
@@ -32,7 +19,7 @@ impl Slack {
     #[allow(clippy::result_large_err)]
     #[cfg(feature = "ureq")]
     pub fn send_ureq(&self, text: &str) -> Result<(), ureq::Error> {
-        ureq::post(self.hook.as_str())
+        ureq::post(self.webhook.as_str())
             .set("User-Agent", crate::USER_AGENT)
             .send_string(&payload_to_json(text))?;
         Ok(())
@@ -48,7 +35,7 @@ impl Slack {
         reqwest::ClientBuilder::new()
             .user_agent(crate::USER_AGENT)
             .build()?
-            .post(self.hook.clone())
+            .post(self.webhook.clone())
             .body(payload_to_json(text))
             .send()
             .await?

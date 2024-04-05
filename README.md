@@ -4,25 +4,27 @@
 
 The name of this Rust crate is inspired by the notification arrival sound.
 
-This README is primarily meant for end users and which services are available when this crate is added in other software.
-For ways to integrate this crate into your rust application programmatically check [its docs.rs entry](https://docs.rs/pling).
+Check out the documentation on <https://docs.rs/pling>.
 
 ## Services
 
 ### Currently implemented
+
 Keep in mind they depend on the feature flags this crate is compiled with.
 Feature flags are also described in their documentation entry.
 
-- [Matrix](docs/matrix.md) (untested)
-- [Slack](docs/slack.md) (untested)
-- [Telegram](docs/telegram.md)
-- [Webhook](docs/webhook.md)
+- Matrix (untested)
+- Slack (untested)
+- Telegram
+- Webhook
 
 ### Could be added in the future
+
 - [Zulip](https://zulip.com/api/)
 - feel free to create an Issue or PR to implement another one!
 
 ### Don't seem to have an API 😞
+
 - Signal
 
 ## Contributions welcome!

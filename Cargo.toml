@@ -13,36 +13,15 @@ categories = [
 ]
 keywords = ["notification", "notify", "telegram", "slack"]
 include = [
-	"docs/**/*",
 	"examples/**/*",
 	"src/**/*",
 	"LICENSE",
 	"README.md",
 ]
-# See more keys and their definitions at https://doc.rust-lang.org/cargo/reference/manifest.html
-
-[[example]]
-name = "all_env"
-required-features = []
-
-[[example]]
-name = "matrix"
-required-features = ["ureq"]
-
-[[example]]
-name = "slack"
-required-features = ["ureq"]
-
-[[example]]
-name = "telegram"
-required-features = ["ureq"]
-
-[[example]]
-name = "webhook"
-required-features = ["ureq"]
 
 [features]
-default = ["ureq"]
+# default = ["clap", "reqwest", "ureq"]
+clap = ["dep:clap"]
 reqwest = ["dep:reqwest"]
 ureq = ["dep:ureq"]
 
@@ -52,8 +31,13 @@ unsafe_code = "forbid"
 pedantic = "warn"
 nursery = "warn"
 
+[[example]]
+name = "clap"
+required-features = ["ureq", "clap"]
+
 [dependencies]
 anyhow = "1"
+clap = { version = "4", optional = true, features = ["derive", "env"] }
 reqwest = { version = "0.12", optional = true, default-features = false, features = ["rustls-tls", "socks"] }
 ureq = { version = "2", optional = true }
 url = "2"

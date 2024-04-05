@@ -46,6 +46,12 @@ default = ["ureq"]
 reqwest = ["dep:reqwest"]
 ureq = ["dep:ureq"]
 
+[lints.rust]
+unsafe_code = "forbid"
+[lints.clippy]
+pedantic = "warn"
+nursery = "warn"
+
 [dependencies]
 anyhow = "1"
 reqwest = { version = "0.12", optional = true, default-features = false, features = ["rustls-tls", "socks"] }

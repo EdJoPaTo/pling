@@ -29,6 +29,7 @@ impl Webhook {
     /// # Errors
     ///
     /// This method errors when the request could not be send or when the target server returns a not successful status.
+    #[allow(clippy::result_large_err)]
     #[cfg(feature = "ureq")]
     pub fn send_ureq(&self, text: &str) -> Result<(), ureq::Error> {
         ureq::post(self.hook.as_str())

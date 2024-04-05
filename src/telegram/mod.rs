@@ -77,6 +77,7 @@ impl Telegram {
     /// # Errors
     ///
     /// This method errors when the request could not be send or the not be handled by the Telegram API.
+    #[allow(clippy::result_large_err)]
     #[cfg(feature = "ureq")]
     pub fn send_ureq(&self, text: &str) -> Result<(), ureq::Error> {
         let mut form = self.base_form();

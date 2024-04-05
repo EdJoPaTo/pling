@@ -29,6 +29,7 @@ impl Slack {
     /// # Errors
     ///
     /// This method errors when the request could not be send or the not be handled by the Slack API.
+    #[allow(clippy::result_large_err)]
     #[cfg(feature = "ureq")]
     pub fn send_ureq(&self, text: &str) -> Result<(), ureq::Error> {
         ureq::post(self.hook.as_str())

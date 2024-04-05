@@ -96,7 +96,7 @@ impl Telegram {
     ///
     /// This method errors when the request could not be send or the not be handled by the Telegram API.
     #[cfg(feature = "reqwest")]
-    pub async fn send_reqwest(&self, text: &str) -> Result<(), reqwest::Error> {
+    pub async fn send_reqwest(&self, text: &str) -> reqwest::Result<()> {
         let mut form = self.base_form();
         let target_chat = self.target_chat.to_string();
         form.push(("chat_id", target_chat.as_ref()));

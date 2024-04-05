@@ -43,7 +43,7 @@ impl Webhook {
     ///
     /// This method errors when the request could not be send or when the target server returns a not successful status.
     #[cfg(feature = "reqwest")]
-    pub async fn send_reqwest(&self, text: &str) -> Result<(), reqwest::Error> {
+    pub async fn send_reqwest(&self, text: &str) -> reqwest::Result<()> {
         reqwest::ClientBuilder::new()
             .user_agent(crate::USER_AGENT)
             .build()?

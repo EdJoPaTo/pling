@@ -1,6 +1,6 @@
 # Pling
 
-> Send notifications via Slack, Telegram, E-Mail, ...
+> Send notifications via Slack, Telegram, ...
 
 The name of this Rust crate is inspired by the notification arrival sound.
 
@@ -13,8 +13,6 @@ For ways to integrate this crate into your rust application programmatically che
 Keep in mind they depend on the feature flags this crate is compiled with.
 Feature flags are also described in their documentation entry.
 
-- [Command (on the same host)](docs/command.md)
-- [Email](docs/email.md) (untested)
 - [Matrix](docs/matrix.md) (untested)
 - [Slack](docs/slack.md) (untested)
 - [Telegram](docs/telegram.md)

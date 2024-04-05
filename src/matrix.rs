@@ -1,7 +1,6 @@
 use url::Url;
 
 #[derive(Clone, PartialEq, Eq)]
-#[cfg_attr(feature = "serde", derive(serde::Serialize, serde::Deserialize))]
 #[doc = include_str!("../docs/matrix.md")]
 pub struct Matrix {
     pub homeserver: Url,
@@ -16,7 +15,6 @@ impl From<Matrix> for crate::Notifier {
 }
 
 impl Matrix {
-    #[must_use]
     /// Loads the Matrix config from environment variables.
     /// The following variables are used:
     /// - `MATRIX_HOMESERVER`
@@ -24,6 +22,7 @@ impl Matrix {
     /// - `MATRIX_ACCESS_TOKEN`
     ///
     /// When any variable is unset or not valid None is returned.
+    #[must_use]
     pub fn from_env() -> Option<Self> {
         let homeserver = std::env::var("MATRIX_HOMESERVER").ok()?.parse().ok()?;
         let room_id = std::env::var("MATRIX_ROOM_ID").ok()?;
@@ -43,26 +42,26 @@ impl Matrix {
         self.homeserver.join(&path)
     }
 
-    #[cfg(feature = "http-sync")]
-    /// Send a Matrix notification synchronously.
+    /// Send a Matrix notification via [`ureq`].
     ///
     /// # Errors
     ///
     /// This method errors when the request could not be send or the not be handled by the Matrix API.
-    pub fn send_sync(&self, text: &str) -> anyhow::Result<()> {
+    #[cfg(feature = "ureq")]
+    pub fn send_ureq(&self, text: &str) -> anyhow::Result<()> {
         ureq::post(self.generate_url()?.as_str())
             .set("User-Agent", crate::USER_AGENT)
             .send_string(&payload_to_json(text))?;
         Ok(())
     }
 
-    #[cfg(feature = "http-async")]
-    /// Send a Matrix notification asynchronously.
+    /// Send a Matrix notification via [`reqwest`].
     ///
     /// # Errors
     ///
     /// This method errors when the request could not be send or the not be handled by the Matrix API.
-    pub async fn send_async(&self, text: &str) -> anyhow::Result<()> {
+    #[cfg(feature = "reqwest")]
+    pub async fn send_reqwest(&self, text: &str) -> anyhow::Result<()> {
         reqwest::ClientBuilder::new()
             .user_agent(crate::USER_AGENT)
             .build()?

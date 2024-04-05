@@ -1,6 +1,6 @@
 [package]
 name = "pling"
-description = "Send notifications via Slack, Telegram, E-Mail, ..."
+description = "Send notifications via Slack, Telegram, ..."
 version = "0.3.0"
 license = "MIT"
 repository = "https://github.com/EdJoPaTo/pling"
@@ -8,7 +8,6 @@ authors = ["EdJoPaTo <pling-rust@edjopato.de>"]
 edition = "2021"
 categories = [
 	"command-line-interface",
-	"email",
 	"network-programming",
 	"web-programming::http-client",
 ]
@@ -27,66 +26,30 @@ name = "all_env"
 required-features = []
 
 [[example]]
-name = "desktop"
-required-features = ["desktop"]
-
-[[example]]
-name = "email"
-required-features = ["email"]
-
-[[example]]
 name = "matrix"
-required-features = ["http-sync"]
+required-features = ["ureq"]
 
 [[example]]
 name = "slack"
-required-features = ["http-sync"]
+required-features = ["ureq"]
 
 [[example]]
 name = "telegram"
-required-features = ["http-sync"]
+required-features = ["ureq"]
 
 [[example]]
 name = "webhook"
-required-features = ["http-sync"]
+required-features = ["ureq"]
 
 [features]
-default = ["sync"]
-serde = ["dep:serde", "url?/serde"]
-
-sync = [
-	"command",
-	"desktop",
-	"email",
-	"http-sync"
-]
-async = [
-	"command",
-	"desktop",
-	"email",
-	"http-async"
-]
-
-command = []
-desktop = ["dep:notify-rust"]
-email = ["dep:lettre"]
-
-# Feature contains all HTTP APIs in an either sync or async manner.
-http-async = ["dep:url", "dep:reqwest"]
-http-sync = ["dep:url", "dep:ureq"]
+default = ["ureq"]
+reqwest = ["dep:reqwest"]
+ureq = ["dep:ureq"]
 
 [dependencies]
 anyhow = "1"
-notify-rust = { version = "4", optional = true }
-serde = { version = "1", optional = true, features = ["derive"] }
 ureq = { version = "2", optional = true }
-url = { version = "2", optional = true }
-
-[dependencies.lettre]
-version = "0.11"
-optional = true
-default-features = false
-features = ["smtp-transport", "hostname", "builder", "rustls-tls"]
+url = "2"
 
 [dependencies.reqwest]
 version = "0.11"
@@ -99,7 +62,3 @@ features = [
 	"deflate", # response body decompression
 	"gzip", # response body decompression
 ]
-
-[dev-dependencies]
-serde_json = "1"
-serde_yaml = "0.9"

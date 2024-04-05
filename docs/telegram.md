@@ -3,8 +3,6 @@ Send a Telegram message
 Documentation
 - <https://core.telegram.org/bots/api#sendmessage>
 
-Needs to be compiled with feature `http-sync` or `http-async`
-
 # Usage TLDR
 - Create `BOT_TOKEN` via [@BotFather in Telegram](https://telegram.me/BotFather)
 - Add the created bot to the chat/channel or write the bot a first message

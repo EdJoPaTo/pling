@@ -1,6 +1,4 @@
 #[derive(Debug, Clone, PartialEq, Eq, PartialOrd, Ord)]
-#[cfg_attr(feature = "serde", derive(serde::Serialize, serde::Deserialize))]
-#[cfg_attr(feature = "serde", serde(untagged))]
 /// Unique identifier for the target chat or username of the target channel (in the format `@channelusername`)
 pub enum TargetChat {
     Id(i64),

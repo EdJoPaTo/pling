@@ -1,7 +1,6 @@
 use url::Url;
 
 #[derive(Clone, PartialEq, Eq)]
-#[cfg_attr(feature = "serde", derive(serde::Serialize, serde::Deserialize))]
 #[doc = include_str!("../docs/webhook.md")]
 pub struct Webhook {
     pub hook: Url,
@@ -14,37 +13,37 @@ impl From<Webhook> for crate::Notifier {
 }
 
 impl Webhook {
-    #[must_use]
     /// Loads the Webhook config from environment variables.
     /// The following variables are used:
     /// - `WEBHOOK_URL`
     ///
     /// When `WEBHOOK_URL` is unset or not a valid URL None is returned.
+    #[must_use]
     pub fn from_env() -> Option<Self> {
         let hook = std::env::var("WEBHOOK_URL").ok()?.parse().ok()?;
         Some(Self { hook })
     }
 
-    #[cfg(feature = "http-sync")]
-    /// Send a Webhook synchronously.
+    /// Send a Webhook via [`ureq`].
     ///
     /// # Errors
     ///
     /// This method errors when the request could not be send or when the target server returns a not successful status.
-    pub fn send_sync(&self, text: &str) -> Result<(), ureq::Error> {
+    #[cfg(feature = "ureq")]
+    pub fn send_ureq(&self, text: &str) -> Result<(), ureq::Error> {
         ureq::post(self.hook.as_str())
             .set("User-Agent", crate::USER_AGENT)
             .send_string(text)?;
         Ok(())
     }
 
-    #[cfg(feature = "http-async")]
-    /// Send a Webhook asynchronously.
+    /// Send a Webhook via [`reqwest`].
     ///
     /// # Errors
     ///
     /// This method errors when the request could not be send or when the target server returns a not successful status.
-    pub async fn send_async(&self, text: &str) -> Result<(), reqwest::Error> {
+    #[cfg(feature = "reqwest")]
+    pub async fn send_reqwest(&self, text: &str) -> Result<(), reqwest::Error> {
         reqwest::ClientBuilder::new()
             .user_agent(crate::USER_AGENT)
             .build()?

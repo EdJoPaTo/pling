@@ -3,22 +3,13 @@ mod target_chat;
 pub use target_chat::TargetChat;
 
 #[derive(Clone, PartialEq, Eq)]
-#[cfg_attr(feature = "serde", derive(serde::Serialize, serde::Deserialize))]
 #[doc = include_str!("../../docs/telegram.md")]
 pub struct Telegram {
     pub bot_token: String,
     pub target_chat: TargetChat,
 
-    #[cfg_attr(
-        feature = "serde",
-        serde(default, skip_serializing_if = "core::ops::Not::not")
-    )]
     pub disable_web_page_preview: bool,
 
-    #[cfg_attr(
-        feature = "serde",
-        serde(default, skip_serializing_if = "core::ops::Not::not")
-    )]
     pub disable_notification: bool,
 }
 
@@ -39,7 +30,6 @@ impl Telegram {
         }
     }
 
-    #[must_use]
     /// Loads the Telegram config from environment variables.
     /// The following variables are used:
     /// - `TELEGRAM_BOT_TOKEN`
@@ -48,6 +38,7 @@ impl Telegram {
     /// - `TELEGRAM_DISABLE_NOTIFICATION`
     ///
     /// When `TELEGRAM_BOT_TOKEN` or `TELEGRAM_TARGET_CHAT` are unset None is returned.
+    #[must_use]
     pub fn from_env() -> Option<Self> {
         let bot_token = std::env::var("TELEGRAM_BOT_TOKEN").ok()?;
         let target_chat = std::env::var("TELEGRAM_TARGET_CHAT")
@@ -81,13 +72,13 @@ impl Telegram {
         ]
     }
 
-    #[cfg(feature = "http-sync")]
-    /// Send a Telegram notification synchronously.
+    /// Send a Telegram notification via [`ureq`].
     ///
     /// # Errors
     ///
     /// This method errors when the request could not be send or the not be handled by the Telegram API.
-    pub fn send_sync(&self, text: &str) -> Result<(), ureq::Error> {
+    #[cfg(feature = "ureq")]
+    pub fn send_ureq(&self, text: &str) -> Result<(), ureq::Error> {
         let mut form = self.base_form();
         let target_chat = self.target_chat.to_string();
         form.push(("chat_id", target_chat.as_ref()));
@@ -99,13 +90,13 @@ impl Telegram {
         Ok(())
     }
 
-    #[cfg(feature = "http-async")]
-    /// Send a Telegram notification asynchronously.
+    /// Send a Telegram notification via [`reqwest`].
     ///
     /// # Errors
     ///
     /// This method errors when the request could not be send or the not be handled by the Telegram API.
-    pub async fn send_async(&self, text: &str) -> Result<(), reqwest::Error> {
+    #[cfg(feature = "reqwest")]
+    pub async fn send_reqwest(&self, text: &str) -> Result<(), reqwest::Error> {
         let mut form = self.base_form();
         let target_chat = self.target_chat.to_string();
         form.push(("chat_id", target_chat.as_ref()));

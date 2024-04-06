@@ -17,7 +17,9 @@ mod webhook;
 
 pub use crate::matrix::Matrix;
 pub use crate::slack::Slack;
-pub use crate::telegram::{TargetChat as TelegramTargetChat, Telegram};
+pub use crate::telegram::{
+    ParseMode as TelegramParseMode, TargetChat as TelegramTargetChat, Telegram,
+};
 pub use crate::webhook::Webhook;
 
 pub(crate) const USER_AGENT: &str = concat!(

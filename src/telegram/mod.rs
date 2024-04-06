@@ -1,5 +1,7 @@
+mod parse_mode;
 mod target_chat;
 
+pub use parse_mode::ParseMode;
 pub use target_chat::TargetChat;
 
 /// Telegram Notification
@@ -11,8 +13,11 @@ pub struct Telegram {
     pub bot_token: String,
 
     pub target_chat: TargetChat,
+
+    // optional
     pub disable_web_page_preview: bool,
     pub disable_notification: bool,
+    pub parse_mode: Option<ParseMode>,
 }
 
 impl Telegram {
@@ -23,18 +28,23 @@ impl Telegram {
             target_chat,
             disable_web_page_preview: false,
             disable_notification: false,
+            parse_mode: None,
         }
     }
 
     #[must_use]
     fn base_form(&self) -> Vec<(&str, &str)> {
-        vec![
-            (
-                "disable_web_page_preview",
-                str_bool(self.disable_web_page_preview),
-            ),
-            ("disable_notification", str_bool(self.disable_notification)),
-        ]
+        let mut result = Vec::new();
+        if self.disable_web_page_preview {
+            result.push(("disable_web_page_preview", "true"));
+        }
+        if self.disable_notification {
+            result.push(("disable_notification", "true"));
+        }
+        if let Some(parsemode) = self.parse_mode {
+            result.push(("parse_mode", parsemode.to_str()));
+        }
+        result
     }
 
     /// Send a Telegram notification via [`ureq`].
@@ -85,15 +95,6 @@ fn generate_url(bot_token: &str) -> String {
     format!("https://api.telegram.org/bot{bot_token}/sendMessage")
 }
 
-#[must_use]
-const fn str_bool(value: bool) -> &'static str {
-    if value {
-        "true"
-    } else {
-        "false"
-    }
-}
-
 #[test]
 fn url_correct() {
     let url = generate_url("123:ABC");
@@ -107,33 +108,37 @@ fn base_form_minimal() {
         target_chat: TargetChat::Id(1234),
         disable_web_page_preview: false,
         disable_notification: false,
+        parse_mode: None,
     };
     let form = telegram.base_form();
     dbg!(&form);
-    assert_eq!(
-        form,
-        [
-            ("disable_web_page_preview", "false"),
-            ("disable_notification", "false"),
-        ]
-    );
+    assert_eq!(form, []);
 }
 
 #[test]
-fn base_form_disable() {
+fn base_form_disable_preview() {
     let telegram = Telegram {
         bot_token: "123:ABC".to_owned(),
         target_chat: TargetChat::Id(1234),
         disable_web_page_preview: true,
         disable_notification: false,
+        parse_mode: None,
     };
     let form = telegram.base_form();
     dbg!(&form);
-    assert_eq!(
-        form,
-        [
-            ("disable_web_page_preview", "true"),
-            ("disable_notification", "false"),
-        ]
-    );
+    assert_eq!(form, [("disable_web_page_preview", "true"),]);
+}
+
+#[test]
+fn base_form_parse_mode() {
+    let telegram = Telegram {
+        bot_token: "123:ABC".to_owned(),
+        target_chat: TargetChat::Id(1234),
+        disable_web_page_preview: false,
+        disable_notification: false,
+        parse_mode: Some(ParseMode::HTML),
+    };
+    let form = telegram.base_form();
+    dbg!(&form);
+    assert_eq!(form, [("parse_mode", "HTML"),]);
 }

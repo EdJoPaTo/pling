@@ -212,6 +212,7 @@ impl Telegram {
                 target_chat: target_chat.clone(),
                 disable_web_page_preview: self.notification_telegram_disable_web_page_preview,
                 disable_notification: self.notification_telegram_silent,
+                parse_mode: None,
             })
         } else {
             None

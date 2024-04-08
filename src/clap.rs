@@ -85,7 +85,7 @@ pub struct Matrix {
         env,
         value_hint = clap::ValueHint::Url,
         value_name = "URL",
-        requires_all = ["notification_matrix_room_id", "notification_matrix_access_token"],
+        requires = "notification_matrix_room_id",
         help_heading = "Notification Options",
     )]
     pub notification_matrix_homeserver: Option<Url>,
@@ -95,7 +95,7 @@ pub struct Matrix {
         env,
         value_hint = clap::ValueHint::Other,
         value_name = "ROOM_ID",
-        requires_all = ["notification_matrix_homeserver", "notification_matrix_access_token"],
+        requires = "notification_matrix_access_token",
         help_heading = "Notification Options",
     )]
     pub notification_matrix_room_id: Option<String>,
@@ -106,7 +106,7 @@ pub struct Matrix {
         hide_env_values = true,
         value_hint = clap::ValueHint::Other,
         value_name = "ACCESS_TOKEN",
-        requires_all = ["notification_matrix_homeserver", "notification_matrix_room_id"],
+        requires = "notification_matrix_homeserver",
         help_heading = "Notification Options",
     )]
     pub notification_matrix_access_token: Option<String>,

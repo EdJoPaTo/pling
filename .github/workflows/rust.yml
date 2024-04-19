@@ -106,12 +106,9 @@ jobs:
       - run: cargo build --offline --all-features --all-targets
       - run: cargo test --offline --all-features
 
-  github-release:
+  release:
     name: Release ${{ matrix.triple }}
     runs-on: ${{ matrix.os }}
-    needs:
-      - features
-      - test
     strategy:
       fail-fast: false
       matrix:

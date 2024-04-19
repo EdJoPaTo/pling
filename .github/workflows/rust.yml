@@ -74,10 +74,10 @@ jobs:
       - run: cargo fetch
 
       - name: Check all targets
-        run: cargo hack --keep-going --feature-powerset --at-least-one-of reqwest,ureq check --all-targets --offline
+        run: cargo hack --keep-going --feature-powerset check --all-targets --offline
 
       - name: Check without dev dependencies
-        run: cargo hack --keep-going --feature-powerset --at-least-one-of reqwest,ureq --no-dev-deps check --offline
+        run: cargo hack --keep-going --feature-powerset --no-dev-deps check --offline
 
   test:
     name: Test ${{ matrix.toolchain }} ${{ matrix.os }}

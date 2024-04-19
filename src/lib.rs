@@ -4,8 +4,7 @@ Send notifications via Slack, Telegram, ...
 The name of this Rust crate is inspired by the notification arrival sound.
 */
 
-#[cfg(not(any(feature = "reqwest", feature = "ureq")))]
-compile_error!("Either feature 'reqwest' or 'ureq' must be enabled for this crate.");
+#![cfg_attr(not(any(feature = "reqwest", feature = "ureq")), allow(dead_code))]
 
 #[cfg(feature = "clap")]
 pub mod clap;

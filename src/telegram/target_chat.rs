@@ -1,3 +1,5 @@
+use std::borrow::Cow;
+
 /// Unique identifier for the target chat or username of the target channel (in the format `@channelusername`)
 #[derive(Debug, Clone, PartialEq, Eq, PartialOrd, Ord, Hash)]
 pub enum TargetChat {
@@ -25,11 +27,12 @@ impl core::str::FromStr for TargetChat {
     }
 }
 
-impl ToString for TargetChat {
-    fn to_string(&self) -> String {
+impl TargetChat {
+    #[must_use]
+    pub fn to_chat_id(&self) -> Cow<str> {
         match self {
-            Self::Id(id) => id.to_string(),
-            Self::Username(username) => username.to_string(),
+            Self::Id(id) => Cow::Owned(id.to_string()),
+            Self::Username(username) => Cow::Borrowed(username),
         }
     }
 }

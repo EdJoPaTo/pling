@@ -56,8 +56,8 @@ impl Telegram {
     #[cfg(feature = "ureq")]
     pub fn send_ureq(&self, text: &str) -> Result<(), ureq::Error> {
         let mut form = self.base_form();
-        let target_chat = self.target_chat.to_string();
-        form.push(("chat_id", target_chat.as_ref()));
+        let chat_id = self.target_chat.to_chat_id();
+        form.push(("chat_id", &chat_id));
         form.push(("text", text));
 
         ureq::post(&generate_url(&self.bot_token))
@@ -74,8 +74,8 @@ impl Telegram {
     #[cfg(feature = "reqwest")]
     pub async fn send_reqwest(&self, text: &str) -> reqwest::Result<()> {
         let mut form = self.base_form();
-        let target_chat = self.target_chat.to_string();
-        form.push(("chat_id", target_chat.as_ref()));
+        let chat_id = self.target_chat.to_chat_id();
+        form.push(("chat_id", &chat_id));
         form.push(("text", text));
 
         reqwest::ClientBuilder::new()

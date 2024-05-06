@@ -10,6 +10,7 @@ pub enum ParseMode {
 
 impl core::str::FromStr for ParseMode {
     type Err = &'static str;
+
     #[allow(deprecated)]
     fn from_str(str: &str) -> Result<Self, Self::Err> {
         match str {

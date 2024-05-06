@@ -15,6 +15,7 @@ impl From<i64> for TargetChat {
 
 impl core::str::FromStr for TargetChat {
     type Err = &'static str;
+
     fn from_str(str: &str) -> Result<Self, Self::Err> {
         if let Ok(id) = str.parse::<i64>() {
             return Ok(Self::Id(id));

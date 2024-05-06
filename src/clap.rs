@@ -13,7 +13,6 @@
 //! matches.notifications.send_ureq("Hello world!")?;
 //! # Ok::<(), Box<dyn std::error::Error>>(())
 //! ```
-//!
 
 use url::Url;
 

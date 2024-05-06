@@ -1,8 +1,8 @@
+pub use self::parse_mode::ParseMode;
+pub use self::target_chat::TargetChat;
+
 mod parse_mode;
 mod target_chat;
-
-pub use parse_mode::ParseMode;
-pub use target_chat::TargetChat;
 
 /// Telegram Notification
 ///

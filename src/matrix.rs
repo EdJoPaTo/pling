@@ -2,7 +2,7 @@ use url::Url;
 
 /// Matrix Notification
 ///
-/// Documenation: <https://matrix.org/docs/guides/client-server-api/#sending-messages>
+/// Documentation: <https://matrix.org/docs/guides/client-server-api/#sending-messages>
 #[derive(Clone, PartialEq, Eq)]
 pub struct Matrix {
     pub homeserver: Url,

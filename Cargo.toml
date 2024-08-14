@@ -6,6 +6,7 @@ license = "MIT"
 repository = "https://github.com/EdJoPaTo/pling"
 authors = ["EdJoPaTo <pling-rust@edjopato.de>"]
 edition = "2021"
+rust-version = "1.64"
 categories = [
 	"command-line-interface",
 	"network-programming",
@@ -36,8 +37,8 @@ name = "clap"
 required-features = ["ureq", "clap"]
 
 [dependencies]
-anyhow = "1"
-clap = { version = "4", optional = true, features = ["derive", "env"] }
-reqwest = { version = "0.12", optional = true, default-features = false, features = ["rustls-tls", "socks"] }
-ureq = { version = "2", optional = true }
-url = "2"
+anyhow = "1.0.16"
+clap = { version = "4.0.0", optional = true, features = ["derive", "env"] }
+reqwest = { version = "0.12.0", optional = true, default-features = false, features = ["rustls-tls", "socks"] }
+ureq = { version = "2.0.0", optional = true }
+url = "2.2.0"

@@ -84,8 +84,9 @@ impl Telegram {
             .post(generate_url(&self.bot_token))
             .form(&form)
             .send()
-            .await?
-            .error_for_status()?;
+            .await
+            .and_then(reqwest::Response::error_for_status)
+            .map_err(reqwest::Error::without_url)?;
         Ok(())
     }
 }

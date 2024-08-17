@@ -32,8 +32,9 @@ impl Webhook {
             .post(self.webhook.clone())
             .body(body.to_owned())
             .send()
-            .await?
-            .error_for_status()?;
+            .await
+            .and_then(reqwest::Response::error_for_status)
+            .map_err(reqwest::Error::without_url)?;
         Ok(())
     }
 }

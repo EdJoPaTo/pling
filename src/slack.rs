@@ -38,8 +38,9 @@ impl Slack {
             .post(self.webhook.clone())
             .body(payload_to_json(text))
             .send()
-            .await?
-            .error_for_status()?;
+            .await
+            .and_then(reqwest::Response::error_for_status)
+            .map_err(reqwest::Error::without_url)?;
         Ok(())
     }
 }

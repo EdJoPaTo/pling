@@ -39,17 +39,27 @@ impl Args {
     /// Check the documentation of the given notification implementation errors for more details.
     #[cfg(feature = "ureq")]
     pub fn send_ureq(&self, text: &str) -> anyhow::Result<()> {
+        use anyhow::Context;
+
         if let Some(notifier) = self.matrix.to_plain() {
-            notifier.send_ureq(text)?;
+            notifier
+                .send_ureq(text)
+                .context("Failed to send Matrix notification")?;
         }
         if let Some(notifier) = self.slack.to_plain() {
-            notifier.send_ureq(text)?;
+            notifier
+                .send_ureq(text)
+                .context("Failed to send Slack notification")?;
         }
         if let Some(notifier) = self.telegram.to_plain() {
-            notifier.send_ureq(text)?;
+            notifier
+                .send_ureq(text)
+                .context("Failed to send Telegram notification")?;
         }
         if let Some(notifier) = &self.webhook.to_plain() {
-            notifier.send_ureq(text)?;
+            notifier
+                .send_ureq(text)
+                .context("Failed to send webhook notification")?;
         }
         Ok(())
     }
@@ -61,17 +71,31 @@ impl Args {
     /// Check the documentation of the given notification implementation errors for more details.
     #[cfg(feature = "reqwest")]
     pub async fn send_reqwest(&self, text: &str) -> anyhow::Result<()> {
+        use anyhow::Context;
+
         if let Some(notifier) = self.matrix.to_plain() {
-            notifier.send_reqwest(text).await?;
+            notifier
+                .send_reqwest(text)
+                .await
+                .context("Failed to send Matrix notification")?;
         }
         if let Some(notifier) = &self.slack.to_plain() {
-            notifier.send_reqwest(text).await?;
+            notifier
+                .send_reqwest(text)
+                .await
+                .context("Failed to send Slack notification")?;
         }
         if let Some(notifier) = self.telegram.to_plain() {
-            notifier.send_reqwest(text).await?;
+            notifier
+                .send_reqwest(text)
+                .await
+                .context("Failed to send Telegram notification")?;
         }
         if let Some(notifier) = &self.webhook.to_plain() {
-            notifier.send_reqwest(text).await?;
+            notifier
+                .send_reqwest(text)
+                .await
+                .context("Failed to send webhook notification")?;
         }
         Ok(())
     }

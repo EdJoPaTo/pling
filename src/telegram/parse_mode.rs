@@ -11,10 +11,10 @@ pub enum ParseMode {
 impl core::str::FromStr for ParseMode {
     type Err = &'static str;
 
-    #[allow(deprecated)]
     fn from_str(str: &str) -> Result<Self, Self::Err> {
         match str {
             "HTML" => Ok(Self::HTML),
+            #[allow(deprecated)]
             "Markdown" => Ok(Self::Markdown),
             "MarkdownV2" => Ok(Self::MarkdownV2),
             _ => Err("unknown parse_mode"),
@@ -22,11 +22,11 @@ impl core::str::FromStr for ParseMode {
     }
 }
 impl ParseMode {
-    #[allow(deprecated)]
     #[must_use]
     pub const fn to_str(self) -> &'static str {
         match self {
             Self::HTML => "HTML",
+            #[allow(deprecated)]
             Self::Markdown => "Markdown",
             Self::MarkdownV2 => "MarkdownV2",
         }

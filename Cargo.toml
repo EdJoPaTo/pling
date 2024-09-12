@@ -20,6 +20,9 @@ include = [
 	"README.md",
 ]
 
+[package.metadata.docs.rs]
+all-features = true
+
 [features]
 # default = ["clap", "reqwest", "ureq"]
 clap = ["dep:clap"]

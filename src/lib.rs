@@ -4,6 +4,7 @@ Send notifications via Slack, Telegram, ...
 The name of this Rust crate is inspired by the notification arrival sound.
 */
 
+#![cfg_attr(docsrs, feature(doc_auto_cfg))]
 #![cfg_attr(not(any(feature = "reqwest", feature = "ureq")), allow(dead_code))]
 
 pub use crate::matrix::Matrix;

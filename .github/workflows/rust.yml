@@ -3,6 +3,7 @@ name: Rust
 on:
   push:
     branches-ignore: ["dependabot/**"]
+    tags: ["v*"]
   pull_request:
   workflow_dispatch:
 
@@ -51,7 +52,7 @@ jobs:
         toolchain:
           - stable
           - beta
-          - '1.64'
+          - "1.64"
         os:
           - ubuntu-latest
           - macos-latest
@@ -88,7 +89,7 @@ jobs:
           - stable
           - beta
           - nightly
-          - '1.64'
+          - "1.64"
         os:
           - ubuntu-latest
           - macos-latest

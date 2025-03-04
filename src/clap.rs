@@ -14,10 +14,11 @@
 //! # Ok::<(), Box<dyn std::error::Error>>(())
 //! ```
 
+#![allow(clippy::struct_field_names)]
+
 use url::Url;
 
 #[derive(clap::Args)]
-#[allow(clippy::module_name_repetitions)]
 pub struct Args {
     #[command(flatten)]
     pub matrix: Matrix,

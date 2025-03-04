@@ -29,3 +29,6 @@ pub(crate) const USER_AGENT: &str = concat!(
     " ",
     env!("CARGO_PKG_REPOSITORY"),
 );
+#[cfg(feature = "reqwest")]
+pub(crate) const USER_AGENT_REQWEST: reqwest::header::HeaderValue =
+    reqwest::header::HeaderValue::from_static(USER_AGENT);

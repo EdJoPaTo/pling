@@ -79,7 +79,7 @@ impl Telegram {
         form.push(("text", text));
 
         reqwest::ClientBuilder::new()
-            .user_agent(crate::USER_AGENT)
+            .user_agent(crate::USER_AGENT_REQWEST)
             .build()?
             .post(generate_url(&self.bot_token))
             .form(&form)

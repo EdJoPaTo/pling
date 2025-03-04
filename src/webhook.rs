@@ -27,7 +27,7 @@ impl Webhook {
     #[cfg(feature = "reqwest")]
     pub async fn send_reqwest(&self, body: &str) -> reqwest::Result<()> {
         reqwest::ClientBuilder::new()
-            .user_agent(crate::USER_AGENT)
+            .user_agent(crate::USER_AGENT_REQWEST)
             .build()?
             .post(self.webhook.clone())
             .body(body.to_owned())

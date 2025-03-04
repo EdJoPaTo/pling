@@ -33,7 +33,7 @@ impl Slack {
     #[cfg(feature = "reqwest")]
     pub async fn send_reqwest(&self, text: &str) -> reqwest::Result<()> {
         reqwest::ClientBuilder::new()
-            .user_agent(crate::USER_AGENT)
+            .user_agent(crate::USER_AGENT_REQWEST)
             .build()?
             .post(self.webhook.clone())
             .body(payload_to_json(text))

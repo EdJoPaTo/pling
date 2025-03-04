@@ -44,7 +44,7 @@ impl Matrix {
     #[cfg(feature = "reqwest")]
     pub async fn send_reqwest(&self, text: &str) -> anyhow::Result<()> {
         reqwest::ClientBuilder::new()
-            .user_agent(crate::USER_AGENT)
+            .user_agent(crate::USER_AGENT_REQWEST)
             .build()?
             .post(self.generate_url()?)
             .body(payload_to_json(text))

@@ -6,7 +6,7 @@ license = "MIT"
 repository = "https://github.com/EdJoPaTo/pling"
 authors = ["EdJoPaTo <pling-rust@edjopato.de>"]
 edition = "2021"
-rust-version = "1.64"
+rust-version = "1.74"
 categories = [
 	"command-line-interface",
 	"network-programming",

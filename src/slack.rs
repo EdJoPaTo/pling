@@ -20,8 +20,8 @@ impl Slack {
     #[cfg(feature = "ureq")]
     pub fn send_ureq(&self, text: &str) -> Result<(), ureq::Error> {
         ureq::post(self.webhook.as_str())
-            .set("User-Agent", crate::USER_AGENT)
-            .send_string(&payload_to_json(text))?;
+            .header(ureq::http::header::USER_AGENT, crate::USER_AGENT_UREQ)
+            .send(payload_to_json(text))?;
         Ok(())
     }
 

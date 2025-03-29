@@ -61,8 +61,8 @@ impl Telegram {
         form.push(("text", text));
 
         ureq::post(&generate_url(&self.bot_token))
-            .set("User-Agent", crate::USER_AGENT)
-            .send_form(&form)?;
+            .header(ureq::http::header::USER_AGENT, crate::USER_AGENT_UREQ)
+            .send_form(form)?;
         Ok(())
     }
 

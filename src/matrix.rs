@@ -31,8 +31,8 @@ impl Matrix {
     #[cfg(feature = "ureq")]
     pub fn send_ureq(&self, text: &str) -> anyhow::Result<()> {
         ureq::post(self.generate_url()?.as_str())
-            .set("User-Agent", crate::USER_AGENT)
-            .send_string(&payload_to_json(text))?;
+            .header(ureq::http::header::USER_AGENT, crate::USER_AGENT_UREQ)
+            .send(payload_to_json(text))?;
         Ok(())
     }
 

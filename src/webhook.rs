@@ -14,8 +14,8 @@ impl Webhook {
     #[cfg(feature = "ureq")]
     pub fn send_ureq(&self, body: &str) -> Result<(), ureq::Error> {
         ureq::post(self.webhook.as_str())
-            .set("User-Agent", crate::USER_AGENT)
-            .send_string(body)?;
+            .header(ureq::http::header::USER_AGENT, crate::USER_AGENT_UREQ)
+            .send(body)?;
         Ok(())
     }
 

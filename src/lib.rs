@@ -32,3 +32,6 @@ pub(crate) const USER_AGENT: &str = concat!(
 #[cfg(feature = "reqwest")]
 pub(crate) const USER_AGENT_REQWEST: reqwest::header::HeaderValue =
     reqwest::header::HeaderValue::from_static(USER_AGENT);
+#[cfg(feature = "ureq")]
+pub(crate) const USER_AGENT_UREQ: ureq::http::header::HeaderValue =
+    ureq::http::header::HeaderValue::from_static(USER_AGENT);

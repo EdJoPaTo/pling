@@ -40,7 +40,7 @@ impl Args {
     /// Check the documentation of the given notification implementation errors for more details.
     #[cfg(feature = "ureq")]
     pub fn send_ureq(&self, text: &str) -> anyhow::Result<()> {
-        use anyhow::Context;
+        use anyhow::Context as _;
 
         if let Some(notifier) = self.matrix.to_plain() {
             notifier
@@ -72,7 +72,7 @@ impl Args {
     /// Check the documentation of the given notification implementation errors for more details.
     #[cfg(feature = "reqwest")]
     pub async fn send_reqwest(&self, text: &str) -> anyhow::Result<()> {
-        use anyhow::Context;
+        use anyhow::Context as _;
 
         if let Some(notifier) = self.matrix.to_plain() {
             notifier
@@ -270,7 +270,7 @@ impl Webhook {
 
 #[test]
 fn verify_command() {
-    use clap::{CommandFactory, Parser};
+    use clap::{CommandFactory as _, Parser};
 
     #[derive(Parser)]
     struct Cli {

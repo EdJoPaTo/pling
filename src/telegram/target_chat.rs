@@ -30,7 +30,7 @@ impl core::str::FromStr for TargetChat {
 
 impl TargetChat {
     #[must_use]
-    pub fn to_chat_id(&self) -> Cow<str> {
+    pub fn to_chat_id(&self) -> Cow<'_, str> {
         match self {
             Self::Id(id) => Cow::Owned(id.to_string()),
             Self::Username(username) => Cow::Borrowed(username),
